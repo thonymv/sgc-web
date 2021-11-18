@@ -8,7 +8,6 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
-import AuthSocial from '../components/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -37,24 +36,28 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0)
 }));
 
+const ThumbnailLogin = styled('img')(({ theme }) => ({
+  paddingLeft: theme.spacing(12),
+  paddingRight: theme.spacing(12)
+}));
+
+const WelcomeLogin = styled(Typography)(({ theme }) => ({
+  paddingLeft: '30%'
+}));
+
 // ----------------------------------------------------------------------
 
 export default function Login() {
   return (
     <RootStyle title="Login | Minimal-UI">
-      <AuthLayout>
-        Don’t have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
-        </Link>
-      </AuthLayout>
+      <AuthLayout />
 
       <MHidden width="mdDown">
         <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Hi, Welcome Back
-          </Typography>
-          <img src="/static/illustrations/illustration_login.png" alt="login" />
+          <WelcomeLogin variant="h3" sx={{ mt: 10, mb: 5 }}>
+            Bienvenido(a)
+          </WelcomeLogin>
+          <ThumbnailLogin src="/static/illustrations/illustration_login.png" alt="login" />
         </SectionStyle>
       </MHidden>
 
@@ -62,22 +65,13 @@ export default function Login() {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sistema de gestión de contenido (SGC)
             </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+            <Typography sx={{ color: 'text.secondary' }}>
+              Ingrese sus datos y credenciales para iniciar sesión.
+            </Typography>
           </Stack>
-          <AuthSocial />
-
           <LoginForm />
-
-          <MHidden width="smUp">
-            <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
-                Get started
-              </Link>
-            </Typography>
-          </MHidden>
         </ContentStyle>
       </Container>
     </RootStyle>
