@@ -1,7 +1,11 @@
+import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography } from '@mui/material';
+// states
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../features/user/userSlice';
 // layouts
 import AuthLayout from '../layouts/AuthLayout';
 // components
@@ -40,6 +44,19 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function Login() {
+  const { user, loading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(login({ user: 'parmao01', password: '12345678' })).then((data) => {
+      console.warn('data', data);
+    });
+  }, []);
+
+  useEffect(() => {
+    alert(JSON.stringify(user));
+  }, [user]);
+
   return (
     <RootStyle title="Login | Minimal-UI">
       <AuthLayout>
