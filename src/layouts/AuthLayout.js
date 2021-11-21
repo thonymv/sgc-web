@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
@@ -26,6 +26,10 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   }
 }));
 
+const RouterLink = styled(Link)(({ theme }) => ({
+  padding: 0
+}));
+
 // ----------------------------------------------------------------------
 
 AuthLayout.propTypes = {
@@ -36,7 +40,7 @@ export default function AuthLayout({ children }) {
   return (
     <HeaderStyle>
       <RouterLink to="/">
-        <Logo />
+        <Logo sx={{ padding: 0 }} />
       </RouterLink>
 
       <MHidden width="smDown">
