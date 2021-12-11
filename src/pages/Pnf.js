@@ -3,14 +3,14 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
   Card,
   Table,
   Stack,
-  Box,
+  Avatar,
   Button,
   Checkbox,
   TableRow,
@@ -19,8 +19,7 @@ import {
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-  Modal
+  TablePagination
 } from '@mui/material';
 // components
 import Page from '../components/Page';
@@ -30,9 +29,9 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nombres', alignRight: false },
-  { id: 'lastname', label: 'Apellidos', alignRight: false },
-  { id: '', label: '', alignRight: true }
+  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'username', label: 'username', alignRight: false },
+  { id: '' }
 ];
 
 // ----------------------------------------------------------------------
@@ -66,15 +65,13 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Pnf() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const navigate = useNavigate();
 
   const [USERLIST, setUSERLIST] = useState([]);
 
@@ -141,25 +138,20 @@ export default function User() {
     getUsers();
   }, []);
 
-  function goNewUser() {
-    navigate('/dashboard/NewUser');
-  }
-
   return (
-    <Page title="Usuarios | SGC">
+    <Page title="User | Minimal-UI">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Usuarios
+            User
           </Typography>
           <Button
             variant="contained"
             component={RouterLink}
             to="#"
             startIcon={<Icon icon={plusFill} />}
-            onClick={() => goNewUser()}
           >
-            New Users
+            New User
           </Button>
         </Stack>
 
@@ -171,7 +163,7 @@ export default function User() {
           />
 
           <Scrollbar>
-            <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' }}>
+            <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead
                   order={order}
@@ -186,13 +178,32 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
+                      const { ci, nomb1, nomb2, usu } = row;
+                      const isItemSelected = selected.indexOf(nomb1) !== -1;
                       const status = true;
                       return (
-                        <TableRow>
-                          <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                        <TableRow
+                          hover
+                          key={ci}
+                          tabIndex={-1}
+                          role="checkbox"
+                          selected={isItemSelected}
+                          aria-checked={isItemSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={isItemSelected}
+                              onChange={(event) => handleClick(event, nomb1)}
+                            />
+                          </TableCell>
+                          <TableCell component="th" scope="row" padding="none">
+                            <Stack direction="row" alignItems="center" spacing={2}>
+                              <Typography variant="subtitle2" noWrap>
+                                {nomb1}
+                              </Typography>
+                            </Stack>
+                          </TableCell>
+                          <TableCell align="left">{usu}</TableCell>
 
                           <TableCell align="left">
                             <Label

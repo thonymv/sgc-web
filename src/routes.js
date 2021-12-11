@@ -10,6 +10,9 @@ import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
+import Pnf from './pages/Pnf';
+import RecoverPassword from './pages/RecoverPass';
+import NewUser from './pages/NewUser';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +26,9 @@ export default function Router() {
         { path: 'app', element: <DashboardApp /> },
         { path: 'user', element: <User /> },
         { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'blog', element: <Blog /> },
+        { path: 'Pnf', element: <Pnf /> },
+        { path: 'NewUser', element: <NewUser /> }
       ]
     },
     {
@@ -31,10 +36,13 @@ export default function Router() {
       element: <LogoOnlyLayout />,
       children: [
         { path: 'login', element: <Login /> },
-        { path: 'register', element: <Register /> },
+        { path: 'recoverpassword', element: <RecoverPassword /> },
+        { path: 'login', element: <Login /> },
         { path: '404', element: <NotFound /> },
         { path: '/', element: <Navigate to="/dashboard" /> },
-        { path: '*', element: <Navigate to="/404" /> }
+        { path: '*', element: <Navigate to="/404" /> },
+        { path: 'Pnf', element: <Pnf /> },
+        { path: 'NewUser', element: <NewUser /> }
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> }
