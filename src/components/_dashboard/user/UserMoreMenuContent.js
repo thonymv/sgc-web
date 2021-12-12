@@ -10,18 +10,16 @@ import powerOutline from '@iconify/icons-eva/power-outline';
 // material
 import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 // Modales
-import ModalVerUsuario from '../../../pages/Modales/ModalVerUsuario';
-import ModalEditUser from '../../../pages/Modales/ModalEditUser';
-import ModalEditPasswordUser from '../../../pages/Modales/ModalEditPasswordUser';
-import ModalDisabledUser from '../../../pages/Modales/ModalDisabledUser';
+import ModalDeleteContent from '../../../pages/Modales/ContenidoSinoptico/ModalDeleteContent';
+import ModalEditContent from '../../../pages/Modales/ContenidoSinoptico/ModalEditContent';
+import ModalViewContent from '../../../pages/Modales/ContenidoSinoptico/ModalViewContent';
 
-export default function UserMoreMenu() {
+export default function UserMoreMenuContent() {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [viewUserModal, setViewUserModal] = useState(false);
-  const [editUser, setEditUser] = useState(false);
-  const [editPasswordUser, setEditPasswordUser] = useState(false);
-  const [disabledUser, setDisabledUser] = useState(false);
+  const [modalDeleteContent, setModalDeleteContent] = useState(false);
+  const [modalEditContent, setModalEditContent] = useState(false);
+  const [modalViewContent, setModalViewContent] = useState(false);
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
@@ -38,35 +36,28 @@ export default function UserMoreMenu() {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <MenuItem onClick={() => setViewUserModal(true)} sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={() => setModalViewContent(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Icon icon={eyeOutline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Ver" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={() => setEditUser(true)} sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={() => setModalEditContent(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Icon icon={editFill} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
-        <MenuItem onClick={() => setDisabledUser(true)} sx={{ color: 'text.secondary' }}>
+        <MenuItem onClick={() => setModalDeleteContent(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
-            <Icon icon={powerOutline} width={24} height={24} />
+            <Icon icon={trash2Outline} width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary="Desahabilitar" primaryTypographyProps={{ variant: 'body2' }} />
-        </MenuItem>
-        <MenuItem onClick={() => setEditPasswordUser(true)} sx={{ color: 'text.secondary' }}>
-          <ListItemIcon>
-            <Icon icon={lockOutline} width={24} height={24} />
-          </ListItemIcon>
-          <ListItemText primary="Editar Contraseña" primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
-      <ModalVerUsuario visibility={viewUserModal} setVisibility={setViewUserModal} />
-      <ModalEditUser visibility={editUser} setVisibility={setEditUser} />
-      <ModalEditPasswordUser visibility={editPasswordUser} setVisibility={setEditPasswordUser} />
-      <ModalDisabledUser visibility={disabledUser} setVisibility={setDisabledUser} />
+      <ModalDeleteContent visibility={modalDeleteContent} setVisibility={setModalDeleteContent} />
+      <ModalEditContent visibility={modalEditContent} setVisibility={setModalEditContent} />
+      <ModalViewContent visibility={modalViewContent} setVisibility={setModalViewContent} />
     </>
   );
 }

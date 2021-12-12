@@ -202,9 +202,6 @@ export default function User() {
                               status
                             </Label>
                           </TableCell>
-                          <TableCell align="left">
-                            <Label variant="ghost">Administrador</Label>
-                          </TableCell>
 
                           <TableCell align="right">
                             <UserMoreMenu />

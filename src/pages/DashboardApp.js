@@ -65,7 +65,7 @@ export default function DashboardApp() {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <Button to="#" size="small" color="primary" background="primary">
+            <Button variant="contained" color="primary" background="primary">
               Guardar
             </Button>
           </Grid>

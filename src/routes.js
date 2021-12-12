@@ -13,7 +13,8 @@ import NotFound from './pages/Page404';
 import Pnf from './pages/Pnf';
 import RecoverPassword from './pages/RecoverPass';
 import NewUser from './pages/NewUser';
-
+import CreateContent from './pages/CreateContent';
+import Historial from './pages/Historial';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -28,7 +29,9 @@ export default function Router() {
         { path: 'products', element: <Products /> },
         { path: 'blog', element: <Blog /> },
         { path: 'Pnf', element: <Pnf /> },
-        { path: 'NewUser', element: <NewUser /> }
+        { path: 'NewUser', element: <NewUser /> },
+        { path: 'CreateContent', element: <CreateContent /> },
+        { path: 'Historial', element: <Historial /> }
       ]
     },
     {

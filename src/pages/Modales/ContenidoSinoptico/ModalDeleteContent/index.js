@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
 
 const style = {
   position: 'absolute',
@@ -17,18 +16,12 @@ const style = {
   p: 4
 };
 
-const TexField = {
-  width: '100%',
-  marginBottom: '5%'
-};
-
 const Buttons = {
   margin: '10%',
-  marginBottom: '0%',
-  marginTop: '6%'
+  marginBottom: '0%'
 };
 
-export default function ModalEditPasswordUser({ visibility, setVisibility }) {
+export default function ModalDeleteContent({ visibility, setVisibility }) {
   return (
     <div>
       <Modal
@@ -38,18 +31,9 @@ export default function ModalEditPasswordUser({ visibility, setVisibility }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TextField
-            style={TexField}
-            id="outlined-basic"
-            label="Nueva contraseña"
-            variant="outlined"
-          />
-          <TextField
-            style={TexField}
-            id="outlined-basic"
-            label="Repetir contraseña"
-            variant="outlined"
-          />
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Seguro que desea eliminar el contenido sinóptico ?
+          </Typography>
           <div style={{ flexDirection: 'row' }}>
             <Button
               onClick={() => setVisibility(false)}
@@ -60,7 +44,7 @@ export default function ModalEditPasswordUser({ visibility, setVisibility }) {
               Cancelar
             </Button>
             <Button variant="contained" style={Buttons}>
-              Cambiar
+              Confirmar
             </Button>
           </div>
         </Box>

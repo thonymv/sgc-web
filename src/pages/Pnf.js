@@ -15,22 +15,26 @@ import {
   Checkbox,
   TableRow,
   TableBody,
+  InputLabel,
   TableCell,
   Container,
   Typography,
   TableContainer,
   TablePagination
 } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'username', label: 'username', alignRight: false },
+  { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
+  { id: 'duracion', label: 'Duración', alignRight: false },
   { id: '' }
 ];
 
@@ -73,7 +77,7 @@ export default function Pnf() {
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const [USERLIST, setUSERLIST] = useState([]);
+  const [userList, setUserList] = useState([]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -83,7 +87,7 @@ export default function Pnf() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = userList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -121,17 +125,17 @@ export default function Pnf() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
     axios.get(`http://localhost:8001/usuarios`).then((res) => {
       const persons = res.data;
-      setUSERLIST(persons);
-      console.log(persons);
+      setUserList(persons);
+      console.warn('persons:////', persons);
     });
   }
   useEffect(() => {
@@ -139,11 +143,11 @@ export default function Pnf() {
   }, []);
 
   return (
-    <Page title="User | Minimal-UI">
+    <Page title="Contenido Sinóptico | Minimal-UI">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Contenidos sinópticos
           </Typography>
           <Button
             variant="contained"
@@ -151,17 +155,44 @@ export default function Pnf() {
             to="#"
             startIcon={<Icon icon={plusFill} />}
           >
-            New User
+            Crear contenido
+          </Button>
+        </Stack>
+        <Stack direction="row" alignItems="center">
+          <FormControl style={{ width: 200, marginRight: '2%', marginBottom: '2%' }}>
+            <InputLabel id="demo-simple-select-label">Duración</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="age"
+              label="Age"
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            style={{ marginRight: '2%', marginBottom: '2%' }}
+            color="info"
+          >
+            Aplicar
+          </Button>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            style={{ marginRight: '2%', marginBottom: '2%', color: 'white' }}
+            color="success"
+          >
+            Exportar resultados en PDF
           </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
@@ -169,7 +200,7 @@ export default function Pnf() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -178,44 +209,15 @@ export default function Pnf() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, usu } = row;
-                      const isItemSelected = selected.indexOf(nomb1) !== -1;
+                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
                       const status = true;
                       return (
-                        <TableRow
-                          hover
-                          key={ci}
-                          tabIndex={-1}
-                          role="checkbox"
-                          selected={isItemSelected}
-                          aria-checked={isItemSelected}
-                        >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              checked={isItemSelected}
-                              onChange={(event) => handleClick(event, nomb1)}
-                            />
-                          </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                              <Typography variant="subtitle2" noWrap>
-                                {nomb1}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
-                          <TableCell align="left">{usu}</TableCell>
-
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              status
-                            </Label>
-                          </TableCell>
-
+                        <TableRow>
+                          <TableCell padding="checkbox" />
+                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
+                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMenu />
+                            <UserMoreMenuContent />
                           </TableCell>
                         </TableRow>
                       );
@@ -242,7 +244,7 @@ export default function Pnf() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={userList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

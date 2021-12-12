@@ -22,16 +22,21 @@ import {
   TablePagination,
   Modal
 } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import { UserListHead, HistorialListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nombres', alignRight: false },
-  { id: 'lastname', label: 'Apellidos', alignRight: false },
+  { id: 'Usuario', label: 'Usuario', alignRight: false },
+  { id: 'lastname', label: 'Fecha y Hora', alignRight: false },
+  { id: 'lastname', label: 'Acción', alignRight: false },
   { id: '', label: '', alignRight: true }
 ];
 
@@ -66,13 +71,14 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Historial() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [value, setValue] = useState(null);
 
   const navigate = useNavigate();
 
@@ -150,26 +156,16 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Usuarios
+            Historial
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-            onClick={() => goNewUser()}
-          >
-            New Users
-          </Button>
         </Stack>
 
         <Card>
-          <UserListToolbar
+          <HistorialListToolbar
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
           />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' }}>
               <Table>
@@ -201,13 +197,6 @@ export default function User() {
                             >
                               status
                             </Label>
-                          </TableCell>
-                          <TableCell align="left">
-                            <Label variant="ghost">Administrador</Label>
-                          </TableCell>
-
-                          <TableCell align="right">
-                            <UserMoreMenu />
                           </TableCell>
                         </TableRow>
                       );
