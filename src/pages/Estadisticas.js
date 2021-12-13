@@ -22,19 +22,41 @@ import {
   TablePagination,
   Modal
 } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import { UserListHead, HistorialListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nombres', alignRight: false },
-  { id: 'lastname', label: 'Apellidos', alignRight: false },
+  { id: 'Usuario', label: 'Actual', alignRight: false },
+  { id: 'lastname', label: 'Hoy', alignRight: false },
+  { id: 'lastname', label: 'Semana', alignRight: false },
+  { id: 'lastname', label: 'Mes', alignRight: false },
+  { id: 'lastname', label: 'Año', alignRight: false },
+  { id: 'lastname', label: 'Total', alignRight: false },
   { id: '', label: '', alignRight: true }
 ];
 
+const TABLE_HEAD2 = [
+  { id: 'lastname', label: 'Hoy', alignRight: false },
+  { id: 'lastname', label: 'Semana', alignRight: false },
+  { id: 'lastname', label: 'Mes', alignRight: false },
+  { id: 'lastname', label: 'Año', alignRight: false },
+  { id: 'lastname', label: 'Total', alignRight: false },
+  { id: '', label: '', alignRight: true }
+];
+
+const TitlesStyle = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  textAlign: 'center'
+};
 // ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
@@ -66,13 +88,14 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function User() {
+export default function Estadisticas() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [value, setValue] = useState(null);
 
   const navigate = useNavigate();
 
@@ -150,26 +173,58 @@ export default function User() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Usuarios
+            Estadisticas
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Icon icon={plusFill} />}
-            onClick={() => goNewUser()}
-          >
-            New Users
-          </Button>
         </Stack>
-
+        <Typography style={TitlesStyle}>Tú</Typography>
+        <Card style={{ marginBottom: '1%', maxWidth: 700, marginLeft: '10%' }}>
+          <Scrollbar>
+            <TableContainer sx={{ maxWidth: 700, marginLeft: '-1700' }}>
+              <Table>
+                <UserListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD2}
+                  rowCount={USERLIST.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                  onSelectAllClick={handleSelectAllClick}
+                />
+                <TableBody>
+                  {filteredUsers
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
+                      const status = true;
+                      return (
+                        <TableRow>
+                          <TableCell padding="checkbox" />
+                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
+                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+                {isUserNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <SearchNotFound searchQuery={filterName} />
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+        </Card>
+        <Typography style={TitlesStyle}>Todos los usuarios</Typography>
         <Card>
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-
           <Scrollbar>
             <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' }}>
               <Table>
@@ -193,19 +248,6 @@ export default function User() {
                           <TableCell padding="checkbox" />
                           <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
                           <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
-
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              status
-                            </Label>
-                          </TableCell>
-
-                          <TableCell align="right">
-                            <UserMoreMenu />
-                          </TableCell>
                         </TableRow>
                       );
                     })}

@@ -15,6 +15,7 @@ import RecoverPassword from './pages/RecoverPass';
 import NewUser from './pages/NewUser';
 import CreateContent from './pages/CreateContent';
 import Historial from './pages/Historial';
+import Estadisticas from './pages/Estadisticas';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -31,7 +32,8 @@ export default function Router() {
         { path: 'Pnf', element: <Pnf /> },
         { path: 'NewUser', element: <NewUser /> },
         { path: 'CreateContent', element: <CreateContent /> },
-        { path: 'Historial', element: <Historial /> }
+        { path: 'Historial', element: <Historial /> },
+        { path: 'Estadisticas', element: <Estadisticas /> }
       ]
     },
     {
