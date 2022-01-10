@@ -33,7 +33,8 @@ const header = {
   marginLeft: '25%',
   marginTop: '-5%'
 };
-export default function ModalVerUsuario({ visibility, setVisibility }) {
+export default function ModalVerUsuario({ visibility, setVisibility, userData }) {
+  const { nomb1, nomb2, apel1, apel2, ci, tlfmovil } = userData;
   return (
     <div>
       <Modal
@@ -43,7 +44,7 @@ export default function ModalVerUsuario({ visibility, setVisibility }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography style={header}>Andry Martinez</Typography>
+          <Typography style={header}>{`${nomb1} ${apel1}`}</Typography>
           <List
             sx={{
               width: '100%',
@@ -58,17 +59,9 @@ export default function ModalVerUsuario({ visibility, setVisibility }) {
           >
             <li>
               <ul>
-                <ListSubheader style={subheader}>Correo electrónico</ListSubheader>
-                <ListItem>
-                  <ListItemText primary="correo@gmail.com" />
-                </ListItem>
-              </ul>
-            </li>
-            <li>
-              <ul>
                 <ListSubheader style={subheader}>Cédula</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="23456764" />
+                  <ListItemText primary={ci} />
                 </ListItem>
               </ul>
             </li>
@@ -76,7 +69,7 @@ export default function ModalVerUsuario({ visibility, setVisibility }) {
               <ul>
                 <ListSubheader style={subheader}>Nombres</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="Andry Jose Martinez Castro" />
+                  <ListItemText primary={`${nomb1} ${nomb2} ${apel1} ${apel2}`} />
                 </ListItem>
               </ul>
             </li>
@@ -92,7 +85,7 @@ export default function ModalVerUsuario({ visibility, setVisibility }) {
               <ul>
                 <ListSubheader style={subheader}>Teléfono</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="04164263355" />
+                  <ListItemText primary={`${'+58'} ${tlfmovil}`} />
                 </ListItem>
               </ul>
             </li>

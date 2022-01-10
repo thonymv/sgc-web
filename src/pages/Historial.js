@@ -137,11 +137,25 @@ export default function Historial() {
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
-    axios.get(`http://localhost:8001/usuarios`).then((res) => {
-      const persons = res.data;
-      setUSERLIST(persons);
-      console.log(persons);
-    });
+    setUSERLIST([
+      {
+        usu: 'lguerr01',
+        ci: 'Crear contenido sinoptico',
+        nomb1: 'Leonardo',
+        nomb2: 'Alejandro',
+        apel1: '01-01-2022',
+        apel2: '3:50PM',
+        clav_usu: '46504',
+        rol: true,
+        estatus: true,
+        id_usu: 123,
+        pnf_usu: 1,
+        nuc_usu: 1,
+        tlf_hab: '2124331022',
+        tlfmovil: '4143282632',
+        fh_nac: '1999-09-19'
+      }
+    ]);
   }
   useEffect(() => {
     getUsers();
@@ -189,15 +203,7 @@ export default function Historial() {
                           <TableCell padding="checkbox" />
                           <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
                           <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
-
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              status
-                            </Label>
-                          </TableCell>
+                          <TableCell align="left">{ci}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -228,6 +234,7 @@ export default function Historial() {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage="Filas por paginas:"
           />
         </Card>
       </Container>

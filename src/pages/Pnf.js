@@ -152,7 +152,7 @@ export default function Pnf() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/dashboard/CreateContent"
             startIcon={<Icon icon={plusFill} />}
           >
             Crear contenido
@@ -249,6 +249,7 @@ export default function Pnf() {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage="Filas por paginas:"
           />
         </Card>
       </Container>

@@ -62,13 +62,13 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       }}
     >
       <Box sx={{ px: 2.5, py: 3 }}>
-        <Box onClick={() => goHome()} sx={{ display: 'inline-flex' }}>
+        <Box component={RouterLink} to="/dashboard/app" sx={{ display: 'inline-flex' }}>
           <Logo />
         </Box>
       </Box>
 
       <Box sx={{ mb: 5, mx: 2.5 }}>
-        <Link underline="none" component={RouterLink} to="#">
+        <Link underline="none" component={RouterLink} to="/dashboard/app">
           <AccountStyle>
             <Icon icon={homeOutline} width={22} height={22} />
             <Box sx={{ ml: 2 }}>

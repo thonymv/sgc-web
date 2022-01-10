@@ -6,8 +6,9 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
-import { Stack, TextField, Container, Typography, InputLabel } from '@mui/material';
+import { Stack, TextField, Container, Typography, InputLabel, Button } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 // components
@@ -16,6 +17,11 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
 
 export default function NewUser() {
   return (
@@ -42,11 +48,11 @@ export default function NewUser() {
         </Stack>
         <Stack direction="row">
           <FormControl style={{ width: 200, margin: 10 }}>
-            <InputLabel id="demo-simple-select-label">Núcleo</InputLabel>
+            <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value="age"
+              value={null}
               label="Age"
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -66,11 +72,11 @@ export default function NewUser() {
         </Stack>
         <Stack direction="row">
           <FormControl style={{ width: 200, margin: 10 }}>
-            <InputLabel id="demo-simple-select-label">Prioridad de Usuario</InputLabel>
+            <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value="age"
+              value={null}
               label="Age"
             >
               <MenuItem value={10}>Ten</MenuItem>
@@ -79,6 +85,9 @@ export default function NewUser() {
             </Select>
           </FormControl>
         </Stack>
+        <Button style={{ marginLeft: '90%' }} variant="contained">
+          Enviar
+        </Button>
       </Container>
     </Page>
   );

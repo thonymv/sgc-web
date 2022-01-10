@@ -52,10 +52,17 @@ const TABLE_HEAD2 = [
   { id: '', label: '', alignRight: true }
 ];
 
-const TitlesStyle = {
+const TitlesStyle1 = {
   fontSize: '24px',
   fontWeight: 'bold',
   textAlign: 'center'
+};
+
+const TitlesStyle2 = {
+  fontSize: '24px',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  marginTop: '4%'
 };
 // ----------------------------------------------------------------------
 
@@ -176,7 +183,7 @@ export default function Estadisticas() {
             Estadisticas
           </Typography>
         </Stack>
-        <Typography style={TitlesStyle}>Tú</Typography>
+        <Typography style={TitlesStyle1}>Tú</Typography>
         <Card style={{ marginBottom: '1%', maxWidth: 700, marginLeft: '10%' }}>
           <Scrollbar>
             <TableContainer sx={{ maxWidth: 700, marginLeft: '-1700' }}>
@@ -223,7 +230,7 @@ export default function Estadisticas() {
             </TableContainer>
           </Scrollbar>
         </Card>
-        <Typography style={TitlesStyle}>Todos los usuarios</Typography>
+        <Typography style={TitlesStyle2}>Todos los usuarios</Typography>
         <Card>
           <Scrollbar>
             <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' }}>
@@ -278,6 +285,7 @@ export default function Estadisticas() {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
+            labelRowsPerPage="Filas por paginas:"
           />
         </Card>
       </Container>

@@ -15,7 +15,7 @@ import ModalEditUser from '../../../pages/Modales/ModalEditUser';
 import ModalEditPasswordUser from '../../../pages/Modales/ModalEditPasswordUser';
 import ModalDisabledUser from '../../../pages/Modales/ModalDisabledUser';
 
-export default function UserMoreMenu() {
+export default function UserMoreMenu({ userData }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [viewUserModal, setViewUserModal] = useState(false);
@@ -63,10 +63,22 @@ export default function UserMoreMenu() {
           <ListItemText primary="Editar Contraseña" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
-      <ModalVerUsuario visibility={viewUserModal} setVisibility={setViewUserModal} />
-      <ModalEditUser visibility={editUser} setVisibility={setEditUser} />
-      <ModalEditPasswordUser visibility={editPasswordUser} setVisibility={setEditPasswordUser} />
-      <ModalDisabledUser visibility={disabledUser} setVisibility={setDisabledUser} />
+      <ModalVerUsuario
+        visibility={viewUserModal}
+        setVisibility={setViewUserModal}
+        userData={userData}
+      />
+      <ModalEditUser visibility={editUser} setVisibility={setEditUser} userData={userData} />
+      <ModalEditPasswordUser
+        visibility={editPasswordUser}
+        setVisibility={setEditPasswordUser}
+        userData={userData}
+      />
+      <ModalDisabledUser
+        visibility={disabledUser}
+        setVisibility={setDisabledUser}
+        userData={userData}
+      />
     </>
   );
 }

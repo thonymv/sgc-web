@@ -5,9 +5,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Modal from '@mui/material/Modal';
+import { styled } from '@mui/material/styles';
 // components
 import Page from '../components/Page';
 // ----------------------------------------------------------------------
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
 
 export default function DashboardApp() {
   return (
@@ -21,7 +26,7 @@ export default function DashboardApp() {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
             <FormControl style={{ width: 200 }}>
-              <InputLabel id="demo-simple-select-label">Núcleo</InputLabel>
+              <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -36,7 +41,7 @@ export default function DashboardApp() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <FormControl style={{ width: 200 }}>
-              <InputLabel id="demo-simple-select-label">Plan de Estudio (PNF)</InputLabel>
+              <LabelSelect id="demo-simple-select-label">Plan de Estudio (PNF)</LabelSelect>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -51,7 +56,7 @@ export default function DashboardApp() {
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
             <FormControl style={{ width: 200 }}>
-              <InputLabel id="demo-simple-select-label">Malla curricular</InputLabel>
+              <LabelSelect id="demo-simple-select-label">Malla curricular</LabelSelect>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
