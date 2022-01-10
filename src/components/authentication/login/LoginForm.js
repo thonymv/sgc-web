@@ -47,7 +47,7 @@ export default function LoginForm() {
           navigate('/dashboard', { replace: true });
         })
         .catch((err) => {
-          navigate('/dashboard', { replace: true });
+          // navigate('/dashboard', { replace: true });
         });
     }
   });
