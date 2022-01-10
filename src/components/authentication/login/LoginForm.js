@@ -5,6 +5,7 @@ import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
+import api from '../../../services/api'
 // material
 import {
   Link,
@@ -49,12 +50,12 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async () => {
-      const { name, value } = formik.getFieldProps('username');
+      const user = formik.getFieldProps('username').value;
+      const pass = formik.getFieldProps('password').value;
 
-      const test = new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(false);
-        }, 1000);
+      const test = api.post('/login', {
+        usu: user,
+        clave_usu: pass
       });
 
       try {
@@ -66,7 +67,7 @@ export default function LoginForm() {
         notify('Usuario o contraseña incorrecto');
       } catch (err) {
         notify('Hubo un error al comunicarse con el servidor');
-        console.error('Error: ', err);
+        console.log('Error: ', err);
       }
     }
   });
