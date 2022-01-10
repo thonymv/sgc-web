@@ -16,6 +16,8 @@ import {
   FormControlLabel
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +30,17 @@ export default function LoginForm() {
     password: Yup.string().required('La contraseña es requerida')
   });
 
+  const notify = (message) =>
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+
   const formik = useFormik({
     initialValues: {
       username: '',
@@ -36,19 +49,25 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: async () => {
-      const test = await new Promise((resolve) => {
+      const { name, value } = formik.getFieldProps('username');
+
+      const test = new Promise((resolve) => {
         setTimeout(() => {
-          resolve();
+          resolve(false);
         }, 1000);
       });
 
-      test
-        .then((response) => {
+      try {
+        const response = await test;
+        if (response) {
           navigate('/dashboard', { replace: true });
-        })
-        .catch((err) => {
-          // navigate('/dashboard', { replace: true });
-        });
+          return;
+        }
+        notify('Usuario o contraseña incorrecto');
+      } catch (err) {
+        notify('Hubo un error al comunicarse con el servidor');
+        console.error('Error: ', err);
+      }
     }
   });
 
@@ -113,6 +132,17 @@ export default function LoginForm() {
           Login
         </LoadingButton>
       </Form>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </FormikProvider>
   );
 }

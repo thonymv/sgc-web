@@ -61,9 +61,7 @@ export default function Login() {
     });
   }, []);
 
-  useEffect(() => {
-    alert(JSON.stringify(user));
-  }, [user]);
+  useEffect(() => {}, [user]);
 
   return (
     <RootStyle title="Login | Minimal-UI">
