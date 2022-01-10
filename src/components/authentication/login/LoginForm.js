@@ -55,16 +55,26 @@ export default function LoginForm() {
 
       const test = api.post('/login', {
         usu: user,
-        clave_usu: pass
+        clav_usu: pass
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
       });
 
       try {
         const response = await test;
-        if (response) {
-          navigate('/dashboard', { replace: true });
+        if (!response || !response.data) {
+          notify('Hubo un error al comunicarse con el servidor');
           return;
         }
-        notify('Usuario o contraseña incorrecto');
+        if (response && response.data && response.data.error) {
+          notify('Usuario o contraseña incorrecto');
+          console.error(response.data.error)
+          return;
+        }
+        console.log(response.data)
+        navigate('/dashboard', { replace: true });
       } catch (err) {
         notify('Hubo un error al comunicarse con el servidor');
         console.log('Error: ', err);
