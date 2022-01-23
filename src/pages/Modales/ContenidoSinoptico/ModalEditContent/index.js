@@ -11,6 +11,12 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { styled } from '@mui/material/styles';
+
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
 
 const style = {
   position: 'absolute',
@@ -129,7 +135,7 @@ export default function ModalEditContent({ visibility, setVisibility }) {
               <ul>
                 <ListItem>
                   <FormControl style={{ width: '90%', marginLeft: '-1%' }}>
-                    <InputLabel id="demo-simple-select-label">Duración</InputLabel>
+                    <LabelSelect id="demo-simple-select-label">Duración</LabelSelect>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"

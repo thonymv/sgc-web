@@ -189,6 +189,7 @@ export default function PlanEstudio() {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            placeholderSearch={"Nombre del PNF"}
           />
 
           <Scrollbar>

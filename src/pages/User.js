@@ -189,6 +189,7 @@ export default function User() {
             numSelected={selected.length}
             filterName={filterName}
             onFilterName={handleFilterByName}
+            placeholderSearch={"Correo o cédula"}
           />
 
           <Scrollbar>
