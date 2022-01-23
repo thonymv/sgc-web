@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import DisabledUserForm from '../../../components/forms/DisbledUserForm/DisabledUserForm'
 
 const style = {
   position: 'absolute',
@@ -21,7 +22,7 @@ const Buttons = {
   marginBottom: '0%'
 };
 
-export default function ModalDisabledUser({ visibility, setVisibility }) {
+export default function ModalDisabledUser({ visibility, setVisibility , userData }) {
   return (
     <div>
       <Modal
@@ -32,21 +33,9 @@ export default function ModalDisabledUser({ visibility, setVisibility }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Seguro que desea desahabilitar a el usuario %Correo% ?
+            Seguro que desea {userData.estatus?'desahabilitar':'Habilitar'} a el usuario {userData.usu} ?
           </Typography>
-          <div style={{ flexDirection: 'row' }}>
-            <Button
-              onClick={() => setVisibility(false)}
-              color="error"
-              variant="contained"
-              style={Buttons}
-            >
-              Cancelar
-            </Button>
-            <Button variant="contained" style={Buttons}>
-              Confirmar
-            </Button>
-          </div>
+          <DisabledUserForm userData={userData} setVisibility={setVisibility} />
         </Box>
       </Modal>
     </div>

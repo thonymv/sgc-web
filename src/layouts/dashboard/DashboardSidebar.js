@@ -67,7 +67,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
         </Box>
       </Box>
 
-      <Box sx={{ mb: 5, mx: 2.5 }}>
+      <Box sx={{ mb: 5, mx: 2.5, display:'none' }}>
         <Link underline="none" component={RouterLink} to="/dashboard/app">
           <AccountStyle>
             <Icon icon={homeOutline} width={22} height={22} />

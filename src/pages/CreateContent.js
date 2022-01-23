@@ -18,6 +18,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 const TextAreas = {
   marginRight: '3%'
@@ -29,6 +30,17 @@ const Buttons = {
 };
 
 export default function CreateContent() {
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const token = reactLocalStorage.get('token', true);
+    if(!token){
+      navigate('/login')
+    }
+}, [])
+
   return (
     <Page title="Crear contenido sinóptico | SGC">
       <Container>

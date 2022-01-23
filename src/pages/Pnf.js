@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
@@ -31,6 +31,8 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
+import {reactLocalStorage} from 'reactjs-localstorage';
+
 
 const TABLE_HEAD = [
   { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
@@ -78,6 +80,7 @@ export default function Pnf() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [userList, setUserList] = useState([]);
+  const navigate = useNavigate();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -141,6 +144,13 @@ export default function Pnf() {
   useEffect(() => {
     getUsers();
   }, []);
+
+  useEffect(() => {
+    const token = reactLocalStorage.get('token', true);
+    if(!token){
+      navigate('/login')
+    }
+}, [])
 
   return (
     <Page title="Contenido Sinóptico | Minimal-UI">

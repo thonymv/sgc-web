@@ -6,6 +6,9 @@ import fileTextFill from '@iconify/icons-eva/file-text-fill';
 import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import personOutline from '@iconify/icons-eva/person-outline';
+import bookOpenOutline from '@iconify/icons-eva/book-open-outline';
+
+
 // ----------------------------------------------------------------------
 
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
@@ -15,6 +18,11 @@ const sidebarConfig = [
     title: 'Usuarios',
     path: '/dashboard/user',
     icon: getIcon(peopleFill)
+  },
+  {
+    title: 'PNF',
+    path: '/dashboard/planestudio',
+    icon: getIcon(bookOpenOutline)
   },
   {
     title: 'Contenidos',

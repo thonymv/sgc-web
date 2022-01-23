@@ -32,6 +32,8 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, HistorialListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import {reactLocalStorage} from 'reactjs-localstorage';
+
 
 const TABLE_HEAD = [
   { id: 'Usuario', label: 'Usuario', alignRight: false },
@@ -160,6 +162,13 @@ export default function Historial() {
   useEffect(() => {
     getUsers();
   }, []);
+
+  useEffect(() => {
+    const token = reactLocalStorage.get('token', true);
+    if(!token){
+      navigate('/login')
+    }
+}, [])
 
   function goNewUser() {
     navigate('/dashboard/NewUser');

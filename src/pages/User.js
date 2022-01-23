@@ -4,7 +4,7 @@ import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../services/api'
 // material
 import {
   Card,
@@ -28,6 +28,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombres', alignRight: false },
@@ -77,6 +78,11 @@ export default function User() {
   const navigate = useNavigate();
 
   const [USERLIST, setUSERLIST] = useState([]);
+  const [nucleos, setNucleos] = useState([]);
+
+  const config = {
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -130,35 +136,33 @@ export default function User() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
+  const getNucleos = async () => {
+      api.get('/nucleos', config).then((res) => {
+        const nucleos = res.data;
+        setNucleos(nucleos);
+        console.log(nucleos);
+      }); 
+  }
+
   function getUsers() {
-    /*  axios.get(`http://localhost:8001/usuarios`).then((res) => {
+     api.get('/todos', config).then((res) => {
         const persons = res.data;
         setUSERLIST(persons);
         console.log(persons);
-      }); */
-    setUSERLIST([
-      {
-        usu: 'lguerr01',
-        ci: '26454382',
-        nomb1: 'Leonardo',
-        nomb2: 'Alejandro',
-        apel1: 'Guerra',
-        apel2: 'Paz',
-        clav_usu: '46504',
-        rol: true,
-        estatus: true,
-        id_usu: 123,
-        pnf_usu: 1,
-        nuc_usu: 1,
-        tlf_hab: '2124331022',
-        tlfmovil: '4143282632',
-        fh_nac: '1999-09-19'
-      }
-    ]);
+      }); 
   }
   useEffect(() => {
     getUsers();
+    getNucleos();
   }, []);
+  
+  useEffect(() => {
+    const token = reactLocalStorage.get('token', true);
+    if(!token){
+      navigate('/login')
+    }
+}, [])
+
 
   return (
     <Page title="Usuarios | SGC">
@@ -170,10 +174,13 @@ export default function User() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="/dashboard/NewUser"
+            to={{
+              pathname: '/dashboard/NewUser',
+              state: { nucleos : nucleos }
+            }}
             startIcon={<Icon icon={plusFill} />}
           >
-            New Users
+            Nuevo usuario
           </Button>
         </Stack>
 
@@ -217,7 +224,7 @@ export default function User() {
                           </TableCell>
 
                           <TableCell align="right">
-                            <UserMoreMenu userData={row} />
+                            <UserMoreMenu userData={row} nucleos={nucleos} />
                           </TableCell>
                         </TableRow>
                       );

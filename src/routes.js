@@ -16,6 +16,8 @@ import NewUser from './pages/NewUser';
 import CreateContent from './pages/CreateContent';
 import Historial from './pages/Historial';
 import Estadisticas from './pages/Estadisticas';
+import PlanEstudio from './pages/PlanesDeEstudio'
+import NewPnf from './pages/NewPnf';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -33,7 +35,9 @@ export default function Router() {
         { path: 'NewUser', element: <NewUser /> },
         { path: 'CreateContent', element: <CreateContent /> },
         { path: 'Historial', element: <Historial /> },
-        { path: 'Estadisticas', element: <Estadisticas /> }
+        { path: 'Estadisticas', element: <Estadisticas /> },
+        { path: 'planestudio', element: <PlanEstudio /> },
+        { path: 'newpnf', element: <NewPnf /> }
       ]
     },
     {
@@ -47,7 +51,10 @@ export default function Router() {
         { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
         { path: 'Pnf', element: <Pnf /> },
-        { path: 'NewUser', element: <NewUser /> }
+        { path: 'NewUser', element: <NewUser /> },
+        { path: 'planestudio', element: <PlanEstudio /> },
+        { path: 'newpnf', element: <NewPnf /> }
+
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> }

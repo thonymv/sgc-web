@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Modal from '@mui/material/Modal';
 import { styled } from '@mui/material/styles';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // components
 import Page from '../components/Page';
 // ----------------------------------------------------------------------
@@ -15,12 +16,20 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 }));
 
 export default function DashboardApp() {
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+      navigate('/dashboard/user')
+    
+  }, [])
+
   return (
     <Page title="Dashboard | Minimal-UI">
       <Container maxWidth="xl">
         <Box sx={{ pb: 5 }}>
           <Typography variant="h4">
-            Bienvenido, %nombre_usuario%. Hoy es 08/12/2021 Su última sesión fue el 08/12/2021
+            Bienvenido, Hoy es 08/12/2021 Su última sesión fue el 08/12/2021
           </Typography>
         </Box>
         <Grid container spacing={3}>

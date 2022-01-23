@@ -56,9 +56,9 @@ export default function Login() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(login({ user: 'parmao01', password: '12345678' })).then((data) => {
-      console.warn('data', data);
-    });
+    // dispatch(login({ user: 'parmao01', password: '12345678' })).then((data) => {
+    //   console.warn('data', data);
+    // });
   }, []);
 
   useEffect(() => {}, [user]);

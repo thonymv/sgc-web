@@ -34,7 +34,7 @@ const header = {
   marginTop: '-5%'
 };
 export default function ModalVerUsuario({ visibility, setVisibility, userData }) {
-  const { nomb1, nomb2, apel1, apel2, ci, tlfmovil } = userData;
+  const { nomb1, nomb2, apel1, apel2, ci, tlf_movil, fh_nac } = userData;
   return (
     <div>
       <Modal
@@ -85,7 +85,7 @@ export default function ModalVerUsuario({ visibility, setVisibility, userData })
               <ul>
                 <ListSubheader style={subheader}>Teléfono</ListSubheader>
                 <ListItem>
-                  <ListItemText primary={`${'+58'} ${tlfmovil}`} />
+                  <ListItemText primary={`${'+58'} ${tlf_movil}`} />
                 </ListItem>
               </ul>
             </li>
@@ -101,7 +101,7 @@ export default function ModalVerUsuario({ visibility, setVisibility, userData })
               <ul>
                 <ListSubheader style={subheader}>Fecha de nacimiento</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="31/08/2000" />
+                  <ListItemText primary={fh_nac} />
                 </ListItem>
               </ul>
             </li>

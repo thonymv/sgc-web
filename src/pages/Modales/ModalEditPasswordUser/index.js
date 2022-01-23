@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import EditPassForm from '../../../components/forms/EditPassForm/EditPassForm'
 
 const style = {
   position: 'absolute',
@@ -28,7 +29,7 @@ const Buttons = {
   marginTop: '6%'
 };
 
-export default function ModalEditPasswordUser({ visibility, setVisibility }) {
+export default function ModalEditPasswordUser({ visibility, setVisibility, userData }) {
   return (
     <div>
       <Modal
@@ -38,31 +39,7 @@ export default function ModalEditPasswordUser({ visibility, setVisibility }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TextField
-            style={TexField}
-            id="outlined-basic"
-            label="Nueva contraseña"
-            variant="outlined"
-          />
-          <TextField
-            style={TexField}
-            id="outlined-basic"
-            label="Repetir contraseña"
-            variant="outlined"
-          />
-          <div style={{ flexDirection: 'row' }}>
-            <Button
-              onClick={() => setVisibility(false)}
-              color="error"
-              variant="contained"
-              style={Buttons}
-            >
-              Cancelar
-            </Button>
-            <Button variant="contained" style={Buttons}>
-              Cambiar
-            </Button>
-          </div>
+        <EditPassForm userData={userData} setVisibility={setVisibility} />
         </Box>
       </Modal>
     </div>

@@ -15,7 +15,7 @@ import ModalEditUser from '../../../pages/Modales/ModalEditUser';
 import ModalEditPasswordUser from '../../../pages/Modales/ModalEditPasswordUser';
 import ModalDisabledUser from '../../../pages/Modales/ModalDisabledUser';
 
-export default function UserMoreMenu({ userData }) {
+export default function UserMoreMenu({ userData , nucleos }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [viewUserModal, setViewUserModal] = useState(false);
@@ -54,7 +54,7 @@ export default function UserMoreMenu({ userData }) {
           <ListItemIcon>
             <Icon icon={powerOutline} width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary="Desahabilitar" primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary={userData.estatus?'Desahabilitar':'Habilitar'} primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         <MenuItem onClick={() => setEditPasswordUser(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
@@ -68,7 +68,7 @@ export default function UserMoreMenu({ userData }) {
         setVisibility={setViewUserModal}
         userData={userData}
       />
-      <ModalEditUser visibility={editUser} setVisibility={setEditUser} userData={userData} />
+      <ModalEditUser nucleos={nucleos} visibility={editUser} setVisibility={setEditUser} userData={userData} />
       <ModalEditPasswordUser
         visibility={editPasswordUser}
         setVisibility={setEditPasswordUser}

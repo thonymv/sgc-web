@@ -2,11 +2,19 @@ import * as React from 'react';
 import { Box, InputLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import * as Yup from 'yup';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { LoadingButton } from '@mui/lab';
+import { useFormik, Form, FormikProvider } from 'formik';
+import api from '../../../services/api'
+import { ToastContainer, toast } from 'react-toastify';
+import EditUserForm from '../../../components/forms/EditUserForm/EditUserForm'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const style = {
   position: 'absolute',
@@ -32,7 +40,12 @@ const Buttons = {
   marginTop: '6%'
 };
 
-export default function ModalEditUser({ visibility, setVisibility }) {
+
+
+
+
+export default function ModalEditUser({ visibility, setVisibility , userData, nucleos }) {
+
   return (
     <div>
       <Modal
@@ -42,50 +55,7 @@ export default function ModalEditUser({ visibility, setVisibility }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <TextField style={TexField} id="outlined-basic" label="Correo" variant="outlined" />
-          <TextField style={TexField} id="outlined-basic" label="Cedula" variant="outlined" />
-          <TextField style={TexField} id="outlined-basic" label="Nombres" variant="outlined" />
-          <TextField style={TexField} id="outlined-basic" label="Apellidos" variant="outlined" />
-          <FormControl style={TexField}>
-            <InputLabel id="demo-simple-select-label">Institución</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="Institución"
-              label="Age"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-          <TextField style={TexField} id="outlined-basic" label="Telefono" variant="outlined" />
-          <FormControl style={TexField}>
-            <InputLabel id="demo-simple-select-label">Rol de usuario</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="Institución"
-              label="Age"
-            >
-              <MenuItem value={10}>Administrador</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
-          </FormControl>
-          <div style={{ flexDirection: 'row' }}>
-            <Button
-              onClick={() => setVisibility(false)}
-              color="error"
-              variant="contained"
-              style={Buttons}
-            >
-              Cancelar
-            </Button>
-            <Button variant="contained" style={Buttons}>
-              Guardar
-            </Button>
-          </div>
+        <EditUserForm userData={userData} nucleos={nucleos} setVisibility={setVisibility} />
         </Box>
       </Modal>
     </div>

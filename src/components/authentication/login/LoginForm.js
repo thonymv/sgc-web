@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -25,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function LoginForm() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
 
   const LoginSchema = Yup.object().shape({
     username: Yup.string().required('El nombre de usuario es requerido'),
@@ -73,7 +74,7 @@ export default function LoginForm() {
           console.error(response.data.error)
           return;
         }
-        console.log(response.data)
+        
         navigate('/dashboard', { replace: true });
       } catch (err) {
         notify('Hubo un error al comunicarse con el servidor');

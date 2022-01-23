@@ -18,8 +18,8 @@ import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 import {reactLocalStorage} from 'reactjs-localstorage';
-import NewUserForm from 'src/components/forms/NewUserForm/NewUserForm';
 import api from 'src/services/api';
+import NewPnfForm from 'src/components/forms/NewPnfForm/NewPnfForm'
 
 const LabelSelect = styled(InputLabel)(({ theme }) => ({
   backgroundColor: 'white',
@@ -28,7 +28,7 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 
 
 
-export default function NewUser() {
+export default function NewPnf() {
 
   const navigate = useNavigate();
 
@@ -62,10 +62,10 @@ const getNucleos = async () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Crear Usuario 
+            Crear Plan de Estudio 
           </Typography>
         </Stack>
-        <NewUserForm nucleos={nucleos} />
+        <NewPnfForm nucleos={nucleos} />
       </Container>
     </Page>
   );

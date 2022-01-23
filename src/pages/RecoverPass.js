@@ -1,4 +1,5 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink , useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 // material
 import { styled } from '@mui/material/styles';
 import { Card, Stack, Link, Container, Typography } from '@mui/material';
@@ -8,6 +9,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { RecoverForm } from '../components/authentication/recover';
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +50,16 @@ const WelcomeLogin = styled(Typography)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function RecoverPassword() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = reactLocalStorage.get('token', true);
+    if(!token){
+      navigate('/login')
+    }
+}, [])
+
   return (
     <RootStyle title="Login | Minimal-UI">
       <AuthLayout />
