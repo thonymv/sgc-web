@@ -6,7 +6,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
-import { Stack, TextField, Container, Typography, InputLabel } from '@mui/material';
+import { Divider as DividerAlias, Stack, TextField, Container, Typography, InputLabel } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -18,15 +18,30 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { styled } from '@mui/material/styles';
+
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
+
+const Divider = styled(DividerAlias)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    opacity: 0,
+    marginBottom: 0,
+  },
+}));
 
 const TextAreas = {
-  marginRight: '3%'
+  marginTop: '4em',
+  padding: '0.5em'
 };
 
 const Buttons = {
-  marginLeft: '90%',
-  marginTop: '4%'
+  height:"3em"
 };
 
 export default function CreateContent() {
@@ -36,10 +51,10 @@ export default function CreateContent() {
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
   return (
     <Page title="Crear contenido sinóptico | SGC">
@@ -49,78 +64,66 @@ export default function CreateContent() {
             Crear contenido
           </Typography>
         </Stack>
-        <Stack direction="row">
-          <FormControl style={TextAreas}>
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Saberes</InputLabel>
             <TextareaAutosize
-              maxRows={8}
+              maxRows={50}
+              minRows={10}
               aria-label="maximum height"
-              placeholder="Maximum 4 rows"
-              defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua."
-              style={{ width: 280, marginTop: '18%', marginLeft: '5%' }}
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
             />
           </FormControl>
-          <FormControl style={TextAreas}>
+          <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Recursos</InputLabel>
             <TextareaAutosize
-              maxRows={8}
+              maxRows={50}
+              minRows={10}
               aria-label="maximum height"
-              placeholder="Maximum 4 rows"
-              defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua."
-              style={{ width: 280, marginTop: '18%', marginLeft: '5%' }}
-            />
-          </FormControl>
-          <FormControl>
-            <InputLabel id="demo-simple-select-label">Contenido Analitíco</InputLabel>
-            <TextareaAutosize
-              maxRows={8}
-              aria-label="maximum height"
-              placeholder="Maximum 4 rows"
-              defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua."
-              style={{ width: 280, marginTop: '18%', marginLeft: '5%' }}
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
             />
           </FormControl>
         </Stack>
-        <Stack direction="row" style={{ marginTop: '5%' }}>
-          <FormControl style={TextAreas}>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Contenido Analitíco</InputLabel>
             <TextareaAutosize
-              maxRows={8}
+              minRows={10}
+              maxRows={50}
               aria-label="maximum height"
-              placeholder="Maximum 4 rows"
-              defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                  ut labore et dolore magna aliqua."
-              style={{ width: 250, marginTop: '18%', marginLeft: '5%' }}
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
             />
           </FormControl>
-          <div style={{ margin: 10, marginTop: '5%' }}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Contenido Analitíco</InputLabel>
+            <TextareaAutosize
+              minRows={10}
+              maxRows={50}
+              aria-label="maximum height"
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
+            />
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
             <TextField id="outlined-basic" label="Nombre de unidad curricular" variant="outlined" />
-          </div>
-          <div style={{ margin: 10, marginTop: '5%' }}>
+          </FormControl>
+          <FormControl fullWidth>
             <TextField id="outlined-basic" label="Codigo de malla curricular" variant="outlined" />
-          </div>
-          <FormControl style={{ width: 200, margin: 10, marginTop: '5%' }}>
-            <InputLabel id="demo-simple-select-label">Duración</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="age"
-              label="Age"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
           </FormControl>
         </Stack>
-        <div style={{ flexDirection: 'row' }}>
+        <Divider orientation="horizontal" flexItem />
+        <FormControl fullWidth>
           <Button variant="contained" style={Buttons}>
             Guardar
           </Button>
-        </div>
+        </FormControl>
       </Container>
     </Page>
   );

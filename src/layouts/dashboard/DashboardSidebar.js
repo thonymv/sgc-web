@@ -7,7 +7,7 @@ import homeOutline from '@iconify/icons-eva/home-outline';
 import { styled } from '@mui/material/styles';
 import { Box, Link, Button, Drawer, Typography, Avatar, Stack } from '@mui/material';
 // components
-import Logo from '../../components/Logo';
+import Logo from '../../components/Logo2';
 import Scrollbar from '../../components/Scrollbar';
 import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';

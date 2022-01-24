@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -28,37 +28,39 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 }));
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    height: '98%',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-  };
-  
-  const TexFieldStyle = {
-    width: '100%',
-    marginBottom: '3%'
-  };
-  
-  const Buttons = {
-    marginLeft: '10%',
-    marginBottom: '0%',
-    marginTop: '0%',
-  };
-export default function EditUserForm({ userData , nucleos , setVisibility }) {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: '98%',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+};
+
+const TexFieldStyle = {
+  width: '100%',
+  marginBottom: '3%'
+};
+
+const Buttons = {
+  marginLeft: '10%',
+  marginBottom: '0%',
+  marginTop: '0%',
+};
+export default function EditUserForm({ userData, nucleos, setVisibility }) {
   const navigate = useNavigate();
 
-  const { usu , nomb1 , nomb2 , apel1 , apel2 ,ci , nuc_usu , tlf_movil, fh_nac } = userData;
+  const { usuario, nombre, nombre2, apellido, apellido2, ci, tlf_movil, nacimiento, id } = userData;
+
+  const nuc = userData.nucleo
 
   const [nucleo, setNucleo] = useState('')
 
   const EditSchema = Yup.object().shape({
-    nomb1: Yup.string().required('El nombre de usuario es requerido'),
+    usuario: Yup.string().required('El nombre de usuario es requerido'),
   });
 
   const token = localStorage.getItem('token');
@@ -79,7 +81,7 @@ export default function EditUserForm({ userData , nucleos , setVisibility }) {
       progress: undefined
     });
 
-const notifySuccess = (message) =>
+  const notifySuccess = (message) =>
     toast.success(message, {
       position: 'bottom-right',
       autoClose: 5000,
@@ -92,44 +94,44 @@ const notifySuccess = (message) =>
 
   const formik = useFormik({
     initialValues: {
-      usu: usu ,
-      nomb1: nomb1,
-      nomb2: nomb2,
-      apel1: apel1,
-      apel2: apel2,
+      usuario: usuario,
+      nombre: nombre,
+      nombre2: nombre2,
+      apellido: apellido,
+      apellido2: apellido2,
       ci: ci,
-      nuc_usu: nuc_usu,
-      tlf_movil: tlf_movil ,
-      fh_nac: fh_nac
+      nuc: nuc,
+      tlf_movil: tlf_movil,
+      nacimiento: nacimiento
     },
     onSubmit: async () => {
-      const usu = formik.getFieldProps('usu').value;
-      const nomb1 = formik.getFieldProps('nomb1').value;
-      const nomb2 = formik.getFieldProps('nomb2').value;
-      const apel1 = formik.getFieldProps('apel1').value;
-      const apel2 = formik.getFieldProps('apel2').value;
+      const usuario = formik.getFieldProps('usuario').value;
+      const nombre = formik.getFieldProps('nombre').value;
+      const nombre2 = formik.getFieldProps('nombre2').value;
+      const apellido = formik.getFieldProps('apellido').value;
+      const apellido2 = formik.getFieldProps('apellido2').value;
       const ci = formik.getFieldProps('ci').value;
       const tlf_movil = formik.getFieldProps('tlf_movil').value;
-      const fh_nac = formik.getFieldProps('fh_nac').value;
+      const nacimiento = formik.getFieldProps('nacimiento').value;
 
 
-      const req = api.put('/usuarios', {
-          usu: usu,
-          nomb1: nomb1 ,
-          nomb2 : nomb2,
-          apel1: apel1,
-          apel2: apel2,
-          nuc_usu: nucleo,
-          ci:ci,
-          tlf_movil: tlf_movil,
-          fh_nac: fh_nac ,
-      }, config );
+      const req = api.put(`api/users/${id}`, {
+        usuario: usuario,
+        nombre: nombre,
+        nombre2: nombre2,
+        apellido: apellido,
+        apellido2: apellido2,
+        nucleo: nucleo,
+        ci: ci,
+        tlf_movil: tlf_movil,
+        nacimiento: nacimiento,
+      }, config);
 
       try {
-          const response = await req;
-          notifySuccess('Actualización Exitosa!')
+        const response = await req;
+        notifySuccess('Actualización Exitosa!')
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
 
     }
@@ -147,20 +149,20 @@ const notifySuccess = (message) =>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="nomb1"
+            autoComplete="nombre"
             type="text"
             label="Primer Nombre"
-            {...getFieldProps('nomb1')}
+            {...getFieldProps('nombre')}
             style={TexFieldStyle}
           />
         </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="nomb2"
+            autoComplete="nombre2"
             type="text"
             label="Segundo Nombre"
-            {...getFieldProps('nomb2')}
+            {...getFieldProps('nombre2')}
             style={TexFieldStyle}
 
           />
@@ -168,25 +170,25 @@ const notifySuccess = (message) =>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="apel1"
+            autoComplete="apellido"
             type="text"
             label="Primer Apellido"
-            {...getFieldProps('apel1')}
+            {...getFieldProps('apellido')}
             style={TexFieldStyle}
 
           />
-        </Stack>        
+        </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="apel2"
+            autoComplete="apellido2"
             type="text"
             label="Segundo Apellido"
-            {...getFieldProps('apel2')}
+            {...getFieldProps('apellido2')}
             style={TexFieldStyle}
 
           />
-        </Stack>        
+        </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
@@ -197,7 +199,7 @@ const notifySuccess = (message) =>
             style={TexFieldStyle}
 
           />
-        </Stack>        
+        </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
@@ -208,20 +210,20 @@ const notifySuccess = (message) =>
             style={TexFieldStyle}
 
           />
-        </Stack>        
+        </Stack>
         <Stack spacing={3}>
           <TextField
             fullWidth
-            autoComplete="fh_nac"
+            autoComplete="nacimiento"
             type="text"
             label="Fecha de Nacimiento"
-            {...getFieldProps('fh_nac')}
+            {...getFieldProps('nacimiento')}
             style={TexFieldStyle}
 
           />
-        </Stack> 
+        </Stack>
         <Stack spacing={3}>
-         <FormControl style={TexFieldStyle}>
+          <FormControl style={TexFieldStyle}>
             <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
@@ -231,32 +233,32 @@ const notifySuccess = (message) =>
               onChange={handleChangeNucleo}
             >
               {nucleos?.map((nucleo) => {
-                return(
+                return (
                   <MenuItem value={nucleo.id_nuc}>{nucleo.nuc}</MenuItem>
                 )
               })}
             </Select>
-         </FormControl>   
-        </Stack>   
-        <div style={{marginLeft:'16%'}}>
-        <LoadingButton
-          size="small"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-          style={Buttons}
-        >
-          Guardar
-        </LoadingButton>
-        <Button
-          size="small"
-          color="error"
-          variant="contained"
-          style={Buttons}
-          onClick={() => setVisibility(false)}
-        >
+          </FormControl>
+        </Stack>
+        <div style={{ marginLeft: '16%' }}>
+          <LoadingButton
+            size="small"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+            style={Buttons}
+          >
+            Guardar
+          </LoadingButton>
+          <Button
+            size="small"
+            color="error"
+            variant="contained"
+            style={Buttons}
+            onClick={() => setVisibility(false)}
+          >
             Cerrar
-        </Button>
+          </Button>
         </div>
 
       </Form>

@@ -28,7 +28,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Nombres', alignRight: false },
@@ -137,31 +137,31 @@ export default function User() {
   const isUserNotFound = filteredUsers.length === 0;
 
   const getNucleos = async () => {
-      api.get('/nucleos', config).then((res) => {
-        const nucleos = res.data;
-        setNucleos(nucleos);
-        console.log(nucleos);
-      }); 
+    api.get('/nucleos', config).then((res) => {
+      const nucleos = res.data;
+      setNucleos(nucleos);
+      console.log(nucleos);
+    });
   }
 
   function getUsers() {
-     api.get('/todos', config).then((res) => {
-        const persons = res.data;
-        setUSERLIST(persons);
-        console.log(persons);
-      }); 
+    api.get('api/users', config).then((res) => {
+      const persons = res.data.users;
+      setUSERLIST(persons);
+      console.log(persons);
+    });
   }
   useEffect(() => {
     getUsers();
     getNucleos();
   }, []);
-  
+
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
 
   return (
@@ -176,7 +176,7 @@ export default function User() {
             component={RouterLink}
             to={{
               pathname: '/dashboard/NewUser',
-              state: { nucleos : nucleos }
+              state: { nucleos: nucleos }
             }}
             startIcon={<Icon icon={plusFill} />}
           >
@@ -208,12 +208,12 @@ export default function User() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2, rol, estatus } = row;
+                      const { ci, nombre, nombre2, apellido, apellido2, estatus } = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="left">{`${nombre} ${nombre2}`}</TableCell>
+                          <TableCell align="left">{`${apellido} ${apellido2}`}</TableCell>
 
                           <TableCell align="left">
                             <Label variant="ghost" color={estatus ? 'success' : 'error'}>
@@ -221,7 +221,7 @@ export default function User() {
                             </Label>
                           </TableCell>
                           <TableCell align="left">
-                            <Label variant="ghost">{rol ? 'Administrador' : 'Usuario'}</Label>
+                            <Label variant="ghost">{estatus > 1 ? 'Administrador' : 'Usuario'}</Label>
                           </TableCell>
 
                           <TableCell align="right">

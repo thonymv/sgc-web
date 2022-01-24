@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink , useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
@@ -15,6 +15,7 @@ import {
   Checkbox,
   TableRow,
   TableBody,
+  TextField as TextInput,
   InputLabel,
   TableCell,
   Container,
@@ -31,8 +32,15 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { styled } from '@mui/material/styles';
 
+const TextField = (props) => <TextInput {...props} inputProps={{ ...props.inputProps, form: { autocomplete: 'off' } }} />
+
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
 
 const TABLE_HEAD = [
   { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
@@ -147,10 +155,10 @@ export default function Pnf() {
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
   return (
     <Page title="Contenido Sinóptico | Minimal-UI">
@@ -170,17 +178,13 @@ export default function Pnf() {
         </Stack>
         <Stack direction="row" alignItems="center">
           <FormControl style={{ width: 200, marginRight: '2%', marginBottom: '2%' }}>
-            <InputLabel id="demo-simple-select-label">Duración</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="age"
-              label="Age"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+            <FormControl fullWidth>
+              <TextField
+                id="outlined-basic"
+                label="Inserte el código"
+                variant="outlined"
+              />
+            </FormControl>
           </FormControl>
           <Button
             variant="contained"
@@ -191,7 +195,7 @@ export default function Pnf() {
           >
             Aplicar
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             component={RouterLink}
             to="#"
@@ -199,7 +203,7 @@ export default function Pnf() {
             color="success"
           >
             Exportar resultados en PDF
-          </Button>
+          </Button> */}
         </Stack>
 
         <Card>

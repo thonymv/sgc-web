@@ -36,10 +36,10 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 const TOTAL = 234;
 
-export default function AppBugReports() {
+export default function AppBugReports({ total }) {
   return (
     <RootStyle>
-      <Typography variant="h3">{fShortenNumber(TOTAL)}</Typography>
+      <Typography variant="h3">{fShortenNumber(total)}</Typography>
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         Nucleos
       </Typography>

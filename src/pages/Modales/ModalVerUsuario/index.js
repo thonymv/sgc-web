@@ -34,7 +34,7 @@ const header = {
   marginTop: '-5%'
 };
 export default function ModalVerUsuario({ visibility, setVisibility, userData }) {
-  const { nomb1, nomb2, apel1, apel2, ci, tlf_movil, fh_nac } = userData;
+  const { nombre, nombre2, apellido, apellido2, ci, tlf_movil, nacimiento } = userData;
   return (
     <div>
       <Modal
@@ -44,7 +44,7 @@ export default function ModalVerUsuario({ visibility, setVisibility, userData })
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography style={header}>{`${nomb1} ${apel1}`}</Typography>
+          <Typography style={header}>{`${nombre} ${apellido}`}</Typography>
           <List
             sx={{
               width: '100%',
@@ -69,7 +69,7 @@ export default function ModalVerUsuario({ visibility, setVisibility, userData })
               <ul>
                 <ListSubheader style={subheader}>Nombres</ListSubheader>
                 <ListItem>
-                  <ListItemText primary={`${nomb1} ${nomb2} ${apel1} ${apel2}`} />
+                  <ListItemText primary={`${nombre} ${nombre2} ${apellido} ${apellido2}`} />
                 </ListItem>
               </ul>
             </li>
@@ -101,7 +101,7 @@ export default function ModalVerUsuario({ visibility, setVisibility, userData })
               <ul>
                 <ListSubheader style={subheader}>Fecha de nacimiento</ListSubheader>
                 <ListItem>
-                  <ListItemText primary={fh_nac} />
+                  <ListItemText primary={nacimiento} />
                 </ListItem>
               </ul>
             </li>

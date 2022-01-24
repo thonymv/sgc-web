@@ -45,9 +45,11 @@ import DatePicker from '@mui/lab/DatePicker';
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
+import StatListToolbar from '../components/_dashboard/estadisticas/StatListToolbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, HistorialListToolbar, UserMoreMenu } from '../components/_dashboard/user';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import Switch from '@mui/material/Switch';
 
 const TABLE_HEAD = [
   { id: 'Usuario', label: 'Actual', alignRight: false },
@@ -72,8 +74,8 @@ const TitlesStyle1 = {
   fontSize: '24px',
   fontWeight: 'bold',
   marginLeft: '48%',
-  maxWidth:1000,
-  marginTop:10
+  maxWidth: 1000,
+  marginTop: 10
 };
 
 const TitlesStyle2 = {
@@ -81,7 +83,7 @@ const TitlesStyle2 = {
   fontWeight: 'bold',
   marginLeft: '40%',
   marginTop: '4%',
-  maxWidth:1000
+  maxWidth: 1000
 };
 // ----------------------------------------------------------------------
 
@@ -195,10 +197,10 @@ export default function Estadisticas() {
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
   function goNewUser() {
     navigate('/dashboard/NewUser');
@@ -211,26 +213,27 @@ export default function Estadisticas() {
           <Typography variant="h4" gutterBottom>
             Estadisticas
           </Typography>
-          
+
         </Stack>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
+            <AppWeeklySales total={25} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
+            <AppNewUsers total={500} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
+            <AppItemOrders total={100} />
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
+            <AppBugReports total={10} />
           </Grid>
         </Grid>
-        <Typography style={TitlesStyle1}>Tú</Typography>
-        <Card style={{ marginBottom: '1%' , width:700 , marginLeft:'10%'}}>
+        <br style={{ lineHeight: "0.75em" }} />
+        <Card style={{ width: "100%" }}>
+          <StatListToolbar />
           <Scrollbar>
-            <TableContainer sx={{ width:700 }}>
+            <TableContainer sx={{ width: '100%' }}>
               <Table>
                 <UserListHead
                   order={order}
@@ -273,54 +276,6 @@ export default function Estadisticas() {
               </Table>
             </TableContainer>
           </Scrollbar>
-        </Card>
-        <Typography style={TitlesStyle2}>Todos los usuarios</Typography>
-        <Card style={{maxWidth:1000}}>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' , maxWidth:1000}}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
-                      const status = true;
-                      return (
-                        <TableRow>
-                          <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"

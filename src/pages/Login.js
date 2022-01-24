@@ -12,6 +12,7 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
+import Logo from '../components/Logo2';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +62,7 @@ export default function Login() {
     // });
   }, []);
 
-  useEffect(() => {}, [user]);
+  useEffect(() => { }, [user]);
 
   return (
     <RootStyle title="Login | Minimal-UI">
@@ -79,12 +80,17 @@ export default function Login() {
       <Container maxWidth="sm">
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Sistema de gestión de contenido (SGC)
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Ingrese sus datos y credenciales para iniciar sesión.
-            </Typography>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '2em' }}>
+              <Logo sx={{ padding: 0 }} />
+            </div>
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Typography variant="h4" gutterBottom>
+                Sistema de gestión de contenido (SGC)
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>
+                Ingrese sus datos y credenciales para iniciar sesión.
+              </Typography>
+            </div>
           </Stack>
           <LoginForm />
         </ContentStyle>

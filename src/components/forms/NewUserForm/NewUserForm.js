@@ -19,7 +19,7 @@ import {
   Divider as DividerAlias,
   Grid
 } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton as LoadingButtonAlias } from '@mui/lab';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -30,6 +30,17 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
   backgroundColor: 'white',
   paddingRight: 5
 }));
+const LoadingButton = styled(LoadingButtonAlias)(({ theme }) => ({
+  margin: 0,
+  width: '100%',
+  height: "100%",
+  fontSize: "1.25em",
+  minHeight: "2.5em",
+  marginTop: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    minHeight: "2.5em",
+  },
+}))
 
 const Divider = styled(DividerAlias)(({ theme }) => ({
   marginTop: theme.spacing(2),
@@ -58,13 +69,7 @@ const TexField = {
   marginBottom: '2%'
 };
 
-const Buttons = {
-  margin: 0,
-  width: '100%',
-  height: "100%",
-  fontSize: "1.25em"
-};
-export default function NewUserForm({ nucleos }) {
+export default function NewUserForm({ nucleos, pnfs }) {
   const navigate = useNavigate();
 
   const [showPassword1, setShowPassword1] = useState(false);
@@ -72,6 +77,7 @@ export default function NewUserForm({ nucleos }) {
 
   const [rol, setRol] = useState('')
   const [nuc, setNuc] = useState('')
+  const [pnf, setPnf] = useState('')
 
   const Scheme = Yup.object().shape({
     clave: Yup.string().required('La contraseña es obilgatoria'),
@@ -79,10 +85,8 @@ export default function NewUserForm({ nucleos }) {
       .oneOf([Yup.ref('clave'), null], 'Las contraseñas no coinciden')
   });
 
-  const token = localStorage.getItem('token');
 
   const config = {
-    headers: { Authorization: `Bearer ${token}` },
     'Content-Type': 'application/json'
   };
 
@@ -120,7 +124,8 @@ export default function NewUserForm({ nucleos }) {
       tlf_movil: '',
       tlf_hab: '',
       fh_nac: '',
-      rol: ''
+      rol: '',
+      pnf: '',
     },
     validationSchema: Scheme,
     onSubmit: async () => {
@@ -135,19 +140,20 @@ export default function NewUserForm({ nucleos }) {
       const tlf_hab = formik.getFieldProps('tlf_hab').value;
       const fh_nac = formik.getFieldProps('fh_nac').value;
 
-      const req = api.post('/usuarios', {
-        usu: usu,
-        clav_usu: clave,
-        nomb1: nomb1,
-        nomb2: nomb2,
-        apel1: apel1,
-        apel2: apel2,
+      const req = api.post('/users', {
+        usuario: usu,
+        password: clave,
+        nombre: nomb1,
+        nombre2: nomb2,
+        apellido: apel1,
+        apellido2: apel2,
         ci: ci,
         tlf_movil: tlf_movil,
-        tlf_hab: tlf_hab,
-        fh_nac: fh_nac,
-        rol: rol,
-        nuc_usu: nuc
+        tlf_local: tlf_hab,
+        nacimiento: fh_nac,
+        estatus: rol,
+        nucleo: nuc,
+        pnf: pnf,
       }, config);
 
       try {
@@ -183,6 +189,10 @@ export default function NewUserForm({ nucleos }) {
 
   const handleChangeRol = (event) => {
     setRol(event.target.value)
+  };
+
+  const handleChangePnf = (event) => {
+    setPnf(event.target.value)
   };
 
   return (
@@ -234,18 +244,16 @@ export default function NewUserForm({ nucleos }) {
             />
           </FormControl>
           <FormControl fullWidth>
-            <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
+            <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={nuc}
+              value={rol}
               label="Age"
-              onChange={handleChangeNucleo}
-              style={TexField}
+              onChange={handleChangeRol}
             >
-              {nucleos ? nucleos.map((row) => {
-                return (<MenuItem value={row.id_nuc}>{row.nuc}</MenuItem>)
-              }) : " "}
+              <MenuItem value={'true'}>Administrador</MenuItem>
+              <MenuItem value={'false'}>Usuario</MenuItem>
             </Select>
           </FormControl>
         </Stack>
@@ -283,19 +291,38 @@ export default function NewUserForm({ nucleos }) {
           </FormControl>
         </Stack>
         <Divider orientation="horizontal" flexItem />
-        <Grid sx={{ flexGrow: 1 }} container spacing={2} justifyContent="center">
+        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
           <Grid item md={3} sm={12} xs={12}>
             <FormControl fullWidth>
-              <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
+              <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={rol}
+                value={nucleos && nuc}
                 label="Age"
-                onChange={handleChangeRol}
+                onChange={handleChangeNucleo}
               >
-                <MenuItem value={'true'}>Administrador</MenuItem>
-                <MenuItem value={'false'}>Usuario</MenuItem>
+                {nucleos
+                  ? nucleos.map((row) => <MenuItem value={row.id}>{row.name}</MenuItem>)
+                  : <MenuItem value={0}>No existen núcleos registrados en el sistema</MenuItem>
+                }
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item md={3} sm={12} xs={12}>
+            <FormControl fullWidth>
+              <LabelSelect id="demo-simple-select-label">PNF</LabelSelect>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={pnfs && pnf}
+                label="Age"
+                onChange={handleChangePnf}
+              >
+                {pnfs
+                  ? pnfs.map((row) => <MenuItem value={row.id}>{row.name}</MenuItem>)
+                  : <MenuItem value={0}>No existen PNF registrados en el sistema</MenuItem>
+                }
               </Select>
             </FormControl>
           </Grid>
@@ -308,7 +335,6 @@ export default function NewUserForm({ nucleos }) {
               type="submit"
               variant="contained"
               loading={isSubmitting}
-              style={Buttons}
             >
               Guardar
             </LoadingButton>

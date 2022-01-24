@@ -80,7 +80,7 @@ export default function HistorialListToolbar({ numSelected, filterName, onFilter
 
       <LocalizationProvider dateAdapter={AdapterDateFns} style={{ marginLeft: '-80% !important' }}>
         <DatePicker
-          label="Basic example"
+          label="Fecha"
           value={value}
           onChange={(newValue) => {
             setValue(newValue);
@@ -91,20 +91,6 @@ export default function HistorialListToolbar({ numSelected, filterName, onFilter
       <Button variant="conatined" color="primary">
         Aplicar
       </Button>
-
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <Icon icon={trash2Fill} />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <Icon icon={roundFilterList} />
-          </IconButton>
-        </Tooltip>
-      )}
     </RootStyle>
   );
 }

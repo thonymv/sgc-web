@@ -6,7 +6,7 @@ import plusFill from '@iconify/icons-eva/plus-fill';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
-import { Stack, TextField, Container, Typography, InputLabel } from '@mui/material';
+import { Stack, TextField, Container, Typography, InputLabel, Divider as DividerAlias } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -18,7 +18,22 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import { styled } from '@mui/material/styles';
+
+const LabelSelect = styled(InputLabel)(({ theme }) => ({
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
+
+const Divider = styled(DividerAlias)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    opacity: 0,
+    marginBottom: 0,
+  },
+}));
 
 const TextAreas = {
   marginRight: '3%'
@@ -35,10 +50,10 @@ export default function CreateMalla() {
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
   return (
     <Page title="Crear contenido sinóptico | SGC">
@@ -48,12 +63,9 @@ export default function CreateMalla() {
             Crear malla
           </Typography>
         </Stack>
-        <Stack direction="row">
-        <div style={{ margin: 10, marginTop: '5%' }}>
-            <TextField id="outlined-basic" label="Codigo" variant="outlined" />
-          </div>
-          <FormControl style={{ width: 200, margin: 10, marginTop: '5%' }}>
-            <InputLabel id="demo-simple-select-label">Nucleo</InputLabel>
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <LabelSelect id="demo-simple-select-label">Nucleo</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -65,8 +77,8 @@ export default function CreateMalla() {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
-          <FormControl style={{ width: 200, margin: 10, marginTop: '5%' }}>
-            <InputLabel id="demo-simple-select-label">PNF</InputLabel>
+          <FormControl fullWidth>
+            <LabelSelect id="demo-simple-select-label">PNF</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -78,8 +90,8 @@ export default function CreateMalla() {
               <MenuItem value={30}>Thirty</MenuItem>
             </Select>
           </FormControl>
-          <FormControl style={{ width: 200, margin: 10, marginTop: '5%' }}>
-            <InputLabel id="demo-simple-select-label">Modalidad</InputLabel>
+          <FormControl fullWidth>
+            <LabelSelect id="demo-simple-select-label">Modalidad</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -92,14 +104,17 @@ export default function CreateMalla() {
             </Select>
           </FormControl>
         </Stack>
-        <Stack direction="row" style={{ marginTop: '5%' }}>
- 
-          <div style={{ margin: 10, marginTop: '5%' }}>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Codigo" variant="outlined" />
+          </FormControl>
+          <FormControl fullWidth>
             <TextField id="outlined-basic" label="Periodos" variant="outlined" />
-          </div>
-          <div style={{ margin: 10, marginTop: '5%' }}>
+          </FormControl>
+          <FormControl fullWidth>
             <TextField id="outlined-basic" label="Trayectos" variant="outlined" />
-          </div>
+          </FormControl>
         </Stack>
         <div style={{ flexDirection: 'row' }}>
           <Button variant="contained" style={Buttons}>

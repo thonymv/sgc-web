@@ -29,7 +29,6 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 const RouterLink = styled(Link)(({ theme }) => ({
   padding: 0
 }));
-
 // ----------------------------------------------------------------------
 
 AuthLayout.propTypes = {
