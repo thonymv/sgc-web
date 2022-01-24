@@ -3,86 +3,45 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import {
-  AppTasks,
-  AppNewUsers,
-  AppBugReports,
-  AppItemOrders,
-  AppNewsUpdate,
-  AppWeeklySales,
-  AppOrderTimeline,
-  AppCurrentVisits,
-  AppWebsiteVisits,
-  AppTrafficBySite,
-  AppCurrentSubject,
-  AppConversionRates
-} from '../components/_dashboard/app';
+import { Link as RouterLink , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
   Card,
   Table,
   Stack,
-  Box,
+  Avatar,
   Button,
   Checkbox,
   TableRow,
   TableBody,
+  InputLabel,
   TableCell,
   Container,
   Typography,
   TableContainer,
-  TablePagination,
-  Modal,
-  Grid
+  TablePagination
 } from '@mui/material';
-import TextField from '@mui/material/TextField';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 // components
 import Page from '../components/Page';
 import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, HistorialListToolbar, UserMoreMenu } from '../components/_dashboard/user';
+import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 import {reactLocalStorage} from 'reactjs-localstorage';
 
+
 const TABLE_HEAD = [
-  { id: 'Usuario', label: 'Actual', alignRight: false },
-  { id: 'lastname', label: 'Hoy', alignRight: false },
-  { id: 'lastname', label: 'Semana', alignRight: false },
-  { id: 'lastname', label: 'Mes', alignRight: false },
-  { id: 'lastname', label: 'Año', alignRight: false },
-  { id: 'lastname', label: 'Total', alignRight: false },
-  { id: '', label: '', alignRight: true }
+  { id: 'cod', label: 'cod', alignRight: false },
+  { id: 'nucleo', label: 'Nucleo', alignRight: false },
+  { id: 'pnf', label: 'PNF', alignRight: false },
+  { id: 'mod', label: 'Modalidad', alignRight: false },
+  { id: '' }
 ];
 
-const TABLE_HEAD2 = [
-  { id: 'lastname', label: 'Hoy', alignRight: false },
-  { id: 'lastname', label: 'Semana', alignRight: false },
-  { id: 'lastname', label: 'Mes', alignRight: false },
-  { id: 'lastname', label: 'Año', alignRight: false },
-  { id: 'lastname', label: 'Total', alignRight: false },
-  { id: '', label: '', alignRight: true }
-];
-
-const TitlesStyle1 = {
-  fontSize: '24px',
-  fontWeight: 'bold',
-  marginLeft: '48%',
-  maxWidth:1000,
-  marginTop:10
-};
-
-const TitlesStyle2 = {
-  fontSize: '24px',
-  fontWeight: 'bold',
-  marginLeft: '40%',
-  marginTop: '4%',
-  maxWidth:1000
-};
 // ----------------------------------------------------------------------
 
 function descendingComparator(a, b, orderBy) {
@@ -114,18 +73,16 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function Estadisticas() {
+export default function Malla() {
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [value, setValue] = useState(null);
 
+  const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
-
-  const [USERLIST, setUSERLIST] = useState([]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -135,7 +92,7 @@ export default function Estadisticas() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
+      const newSelecteds = userList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -173,21 +130,18 @@ export default function Estadisticas() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - userList.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(userList, getComparator(order, orderBy), filterName);
 
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
-
-    /*
     axios.get(`http://localhost:8001/usuarios`).then((res) => {
       const persons = res.data;
-      setUSERLIST(persons);
-      console.log(persons);
+      setUserList(persons);
+      console.warn('persons:////', persons);
     });
-    */
   }
   useEffect(() => {
     getUsers();
@@ -200,90 +154,65 @@ export default function Estadisticas() {
     }
 }, [])
 
-  function goNewUser() {
-    navigate('/dashboard/NewUser');
-  }
-
   return (
-    <Page title="Usuarios | SGC">
+    <Page title="Mallas | Minimal-UI">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Estadisticas
+            Mallas curriculares
           </Typography>
-          
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="/dashboard/CreateMalla"
+            startIcon={<Icon icon={plusFill} />}
+          >
+            Crear malla
+          </Button>
         </Stack>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWeeklySales />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppNewUsers />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppItemOrders />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppBugReports />
-          </Grid>
-        </Grid>
-        <Typography style={TitlesStyle1}>Tú</Typography>
-        <Card style={{ marginBottom: '1%' , width:700 , marginLeft:'10%'}}>
+{/* {        <Stack direction="row" alignItems="center">
+          <FormControl style={{ width: 200, marginRight: '2%', marginBottom: '2%' }}>
+            <InputLabel id="demo-simple-select-label">Duración</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="age"
+              label="Age"
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            style={{ marginRight: '2%', marginBottom: '2%' }}
+            color="info"
+          >
+            Aplicar
+          </Button>
+          <Button
+            variant="contained"
+            component={RouterLink}
+            to="#"
+            style={{ marginRight: '2%', marginBottom: '2%', color: 'white' }}
+            color="success"
+          >
+            Exportar resultados en PDF
+          </Button>
+        </Stack>} */}
+
+        <Card>
           <Scrollbar>
-            <TableContainer sx={{ width:700 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD2}
-                  rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
-                      const status = true;
-                      return (
-                        <TableRow>
-                          <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-                {isUserNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <SearchNotFound searchQuery={filterName} />
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-        </Card>
-        <Typography style={TitlesStyle2}>Todos los usuarios</Typography>
-        <Card style={{maxWidth:1000}}>
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 100, marginLeft: '-1700' , maxWidth:1000}}>
+            <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <UserListHead
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={userList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
@@ -299,6 +228,10 @@ export default function Estadisticas() {
                           <TableCell padding="checkbox" />
                           <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
                           <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="right">
+                            <UserMoreMenuContent />
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -324,7 +257,7 @@ export default function Estadisticas() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={userList.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

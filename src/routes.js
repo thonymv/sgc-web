@@ -18,6 +18,8 @@ import Historial from './pages/Historial';
 import Estadisticas from './pages/Estadisticas';
 import PlanEstudio from './pages/PlanesDeEstudio'
 import NewPnf from './pages/NewPnf';
+import Malla from './pages/Malla';
+import CreateMalla from './pages/CreateMalla';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -37,7 +39,9 @@ export default function Router() {
         { path: 'Historial', element: <Historial /> },
         { path: 'Estadisticas', element: <Estadisticas /> },
         { path: 'planestudio', element: <PlanEstudio /> },
-        { path: 'newpnf', element: <NewPnf /> }
+        { path: 'newpnf', element: <NewPnf /> },
+        { path: 'Malla', element: <Malla /> },
+        { path: 'CreateMalla', element: <CreateMalla /> }
       ]
     },
     {

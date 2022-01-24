@@ -29,6 +29,12 @@ const sidebarConfig = [
     path: '/dashboard/pnf',
     icon: getIcon(fileTextFill)
   },
+  ,
+  {
+    title: 'Malla Curricular',
+    path: '/dashboard/Malla',
+    icon: getIcon(fileTextFill)
+  },
   {
     title: 'Historial',
     path: '/dashboard/historial',
