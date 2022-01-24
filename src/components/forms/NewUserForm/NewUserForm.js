@@ -17,6 +17,7 @@ import {
   TextField as TextInput,
   InputLabel,
   Divider as DividerAlias,
+  Grid
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,6 +34,10 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 const Divider = styled(DividerAlias)(({ theme }) => ({
   marginTop: theme.spacing(2),
   marginBottom: theme.spacing(2),
+  [theme.breakpoints.down('md')]: {
+    opacity: 0,
+    marginBottom: 0,
+  },
 }));
 
 const style = {
@@ -183,7 +188,7 @@ export default function NewUserForm({ nucleos }) {
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack direction="row" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
           <FormControl fullWidth>
             <TextField
               id="outlined-basic"
@@ -212,7 +217,7 @@ export default function NewUserForm({ nucleos }) {
           </FormControl>
         </Stack>
         <Divider orientation="horizontal" flexItem />
-        <Stack direction="row" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
           <FormControl fullWidth>
             <TextField id="outlined-basic" label="Primer Apellido" variant="outlined"
               {...getFieldProps('apel1')}
@@ -245,7 +250,7 @@ export default function NewUserForm({ nucleos }) {
           </FormControl>
         </Stack>
         <Divider orientation="horizontal" flexItem />
-        <Stack direction="row" spacing={2}>
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
           <FormControl fullWidth>
             <TextField id="outlined-basic" label="Telefono Movil" variant="outlined"
               {...getFieldProps('tlf_movil')}
@@ -278,8 +283,8 @@ export default function NewUserForm({ nucleos }) {
           </FormControl>
         </Stack>
         <Divider orientation="horizontal" flexItem />
-        <div style={{ width: "50%" }}>
-          <Stack direction="row" spacing={2}>
+        <Grid sx={{ flexGrow: 1 }} container spacing={2} justifyContent="center">
+          <Grid item md={3} sm={12} xs={12}>
             <FormControl fullWidth>
               <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
               <Select
@@ -293,20 +298,22 @@ export default function NewUserForm({ nucleos }) {
                 <MenuItem value={'false'}>Usuario</MenuItem>
               </Select>
             </FormControl>
-            <FormControl fullWidth>
-              <LoadingButton
-                size="small"
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
-                style={Buttons}
-              >
-                Guardar
-              </LoadingButton>
-            </FormControl>
-          </Stack>
-        </div>
-
+          </Grid>
+        </Grid>
+        <Divider orientation="horizontal" flexItem />
+        <Grid sx={{ flexGrow: 1 }} container spacing={0} justifyContent="center">
+          <Grid item md={3} sm={4} xs={12}>
+            <LoadingButton
+              size="small"
+              type="submit"
+              variant="contained"
+              loading={isSubmitting}
+              style={Buttons}
+            >
+              Guardar
+            </LoadingButton>
+          </Grid>
+        </Grid>
       </Form>
       <ToastContainer
         position="bottom-right"
@@ -319,6 +326,6 @@ export default function NewUserForm({ nucleos }) {
         draggable
         pauseOnHover
       />
-    </FormikProvider>
+    </FormikProvider >
   );
 }
