@@ -35,7 +35,7 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 
 
 const TABLE_HEAD = [
-  { id: 'cod', label: 'cod', alignRight: false },
+  { id: 'Código', label: 'Código', alignRight: false },
   { id: 'nucleo', label: 'Nucleo', alignRight: false },
   { id: 'pnf', label: 'PNF', alignRight: false },
   { id: 'mod', label: 'Modalidad', alignRight: false },

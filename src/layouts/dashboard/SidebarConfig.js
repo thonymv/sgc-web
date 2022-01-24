@@ -7,6 +7,8 @@ import lockFill from '@iconify/icons-eva/lock-fill';
 import personAddFill from '@iconify/icons-eva/person-add-fill';
 import personOutline from '@iconify/icons-eva/person-outline';
 import bookOpenOutline from '@iconify/icons-eva/book-open-outline';
+import gridOutline from '@iconify/icons-eva/grid-outline';
+
 
 
 // ----------------------------------------------------------------------
@@ -33,7 +35,7 @@ const sidebarConfig = [
   {
     title: 'Malla Curricular',
     path: '/dashboard/Malla',
-    icon: getIcon(fileTextFill)
+    icon: getIcon(gridOutline)
   },
   {
     title: 'Historial',

@@ -31,8 +31,8 @@ import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dash
 import {reactLocalStorage} from 'reactjs-localstorage';
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Nombres', alignRight: false },
-  { id: 'lastname', label: 'Apellidos', alignRight: false },
+  { id: 'codigo', label: 'Codigo', alignRight: false },
+  { id: 'name', label: 'PNF', alignRight: false },
   { id: '', label: '', alignRight: true }
 ];
 
