@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -9,47 +9,56 @@ import api from '../../../services/api'
 // material
 import { styled } from '@mui/material/styles';
 import {
-    Stack,
-    FormControl,
-    Select,
-    MenuItem,
-    Button,
-    TextField,
-    InputLabel
+  Stack,
+  FormControl,
+  Select,
+  MenuItem,
+  Button,
+  TextField as TextInput,
+  InputLabel,
+  Divider as DividerAlias,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // ----------------------------------------------------------------------
+const TextField = (props) => <TextInput {...props} inputProps={{ ...props.inputProps, form: { autocomplete: 'off' } }} />
+
 const LabelSelect = styled(InputLabel)(({ theme }) => ({
-    backgroundColor: 'white',
-    paddingRight: 5
-  }));
+  backgroundColor: 'white',
+  paddingRight: 5
+}));
+
+const Divider = styled(DividerAlias)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+}));
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    height: '98%',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-  };
-  
-  const TexField = {
-    width: '100%',
-    marginBottom: '2%'
-  };
-  
-  const Buttons = {
-    marginLeft: '10%',
-    marginBottom: '0%',
-    marginTop: '0%',
-  };
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  height: '98%',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4
+};
+
+const TexField = {
+  width: '100%',
+  marginBottom: '2%'
+};
+
+const Buttons = {
+  margin: 0,
+  width: '100%',
+  height: "100%",
+  fontSize: "1.25em"
+};
 export default function NewUserForm({ nucleos }) {
   const navigate = useNavigate();
 
@@ -62,7 +71,7 @@ export default function NewUserForm({ nucleos }) {
   const Scheme = Yup.object().shape({
     clave: Yup.string().required('La contraseña es obilgatoria'),
     repetir: Yup.string()
-       .oneOf([Yup.ref('clave'), null], 'Las contraseñas no coinciden')
+      .oneOf([Yup.ref('clave'), null], 'Las contraseñas no coinciden')
   });
 
   const token = localStorage.getItem('token');
@@ -83,7 +92,7 @@ export default function NewUserForm({ nucleos }) {
       progress: undefined
     });
 
-const notifySuccess = (message) =>
+  const notifySuccess = (message) =>
     toast.success(message, {
       position: 'bottom-right',
       autoClose: 5000,
@@ -96,17 +105,17 @@ const notifySuccess = (message) =>
 
   const formik = useFormik({
     initialValues: {
-        usu: '' ,
-        nomb1: '',
-        nomb2: '',
-        apel1: '',
-        apel2: '',
-        ci: '',
-        nuc_usu: '',
-        tlf_movil: '' ,
-        tlf_hab: '' ,
-        fh_nac: '',
-        rol: ''
+      usu: '',
+      nomb1: '',
+      nomb2: '',
+      apel1: '',
+      apel2: '',
+      ci: '',
+      nuc_usu: '',
+      tlf_movil: '',
+      tlf_hab: '',
+      fh_nac: '',
+      rol: ''
     },
     validationSchema: Scheme,
     onSubmit: async () => {
@@ -122,39 +131,39 @@ const notifySuccess = (message) =>
       const fh_nac = formik.getFieldProps('fh_nac').value;
 
       const req = api.post('/usuarios', {
-          usu: usu,
-          clav_usu:clave,
-          nomb1: nomb1,
-          nomb2: nomb2,
-          apel1: apel1,
-          apel2: apel2,
-          ci: ci,
-          tlf_movil: tlf_movil,
-          tlf_hab: tlf_hab,
-          fh_nac: fh_nac,
-          rol : rol ,
-          nuc_usu: nuc
-      }, config );
+        usu: usu,
+        clav_usu: clave,
+        nomb1: nomb1,
+        nomb2: nomb2,
+        apel1: apel1,
+        apel2: apel2,
+        ci: ci,
+        tlf_movil: tlf_movil,
+        tlf_hab: tlf_hab,
+        fh_nac: fh_nac,
+        rol: rol,
+        nuc_usu: nuc
+      }, config);
 
       try {
-          const response = await req;
+        const response = await req;
 
-          if (response && response.data && response.data.error) {
-            notifyError(response.data.error);
-            console.log(response.data.error)
-            console.log(usu);
-            return;
-          }
-          notifySuccess('Registrado con Exito!')
+        if (response && response.data && response.data.error) {
+          notifyError(response.data.error);
+          console.log(response.data.error)
+          console.log(usu);
+          return;
+        }
+        notifySuccess('Registrado con Exito!')
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
 
     }
   });
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
-  
+
   const handleShowPassword1 = () => {
     setShowPassword1((show) => !show);
   };
@@ -165,67 +174,61 @@ const notifySuccess = (message) =>
 
   const handleChangeNucleo = (event) => {
     setNuc(event.target.value)
-  }; 
+  };
 
   const handleChangeRol = (event) => {
     setRol(event.target.value)
-  }; 
+  };
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Stack direction="row">
-          <div style={{ margin: 10 }}>
-            <TextField 
-                id="outlined-basic" 
-                label="Correo" 
-                variant="outlined" 
-                {...getFieldProps('usu')}
-                style={TexField}
+        <Stack direction="row" spacing={2}>
+          <FormControl fullWidth>
+            <TextField
+              id="outlined-basic"
+              label="Correo"
+              variant="outlined"
+              {...getFieldProps('usu')}
             />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField 
-            id="outlined-basic" 
-            label="Cedula"
-            variant="outlined" 
-            {...getFieldProps('ci')}
-            style={TexField}
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField
+              id="outlined-basic"
+              label="Cedula"
+              variant="outlined"
+              {...getFieldProps('ci')}
             />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Primer Nombre" variant="outlined" 
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Primer Nombre" variant="outlined"
               {...getFieldProps('nomb1')}
-              style={TexField}
             />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Segundo Nombre" variant="outlined" 
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Segundo Nombre" variant="outlined"
               {...getFieldProps('nomb2')}
-              style={TexField}
             />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Primer Apellido" variant="outlined" 
-              {...getFieldProps('apel1')}
-              style={TexField}
-            />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Segundo Apellido" variant="outlined" 
-              {...getFieldProps('apel2')}
-              style={TexField}
-            />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Fecha de Nacimiento" variant="outlined" 
-              {...getFieldProps('fh_nac')}
-              style={TexField}
-            />
-          </div>
+          </FormControl>
         </Stack>
-        <Stack direction="row">
-          <FormControl style={{ width: 200, margin: 10 }}>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction="row" spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Primer Apellido" variant="outlined"
+              {...getFieldProps('apel1')}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Segundo Apellido" variant="outlined"
+              {...getFieldProps('apel2')}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Fecha de Nacimiento" variant="outlined"
+              {...getFieldProps('fh_nac')}
+            />
+          </FormControl>
+          <FormControl fullWidth>
             <LabelSelect id="demo-simple-select-label">Núcleo</LabelSelect>
             <Select
               labelId="demo-simple-select-label"
@@ -233,72 +236,75 @@ const notifySuccess = (message) =>
               value={nuc}
               label="Age"
               onChange={handleChangeNucleo}
+              style={TexField}
             >
-                {nucleos?nucleos.map((row) => {
-                    return( <MenuItem value={row.id_nuc}>{row.nuc}</MenuItem>                    )
-                } ): " "}
+              {nucleos ? nucleos.map((row) => {
+                return (<MenuItem value={row.id_nuc}>{row.nuc}</MenuItem>)
+              }) : " "}
             </Select>
           </FormControl>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Telefono Movil" variant="outlined" 
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction="row" spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Telefono Movil" variant="outlined"
               {...getFieldProps('tlf_movil')}
-              style={TexField}
             />
-          </div>
-          <div style={{ margin: 10 }}>
-            <TextField id="outlined-basic" label="Telefono Habitación" variant="outlined" 
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Teléfono Habitación" variant="outlined"
               {...getFieldProps('tlf_hab')}
-              style={TexField}
             />
-          </div>
-          <div style={{ margin: 10 }}>
+          </FormControl>
+          <FormControl fullWidth>
             <TextField
-                autoComplete="current-password"
-                type={'password'}
-                label="Contraseña"
-                {...getFieldProps('clave')}
-                error={Boolean(touched.repetir && errors.repetir)}
-                helperText={touched.repetir && errors.repetir}
-                style={TexField}
+              autoComplete="new-password"
+              type={'password'}
+              label="Contraseña"
+              {...getFieldProps('clave')}
+              error={Boolean(touched.repetir && errors.repetir)}
+              helperText={touched.repetir && errors.repetir}
             />
-          </div>
-          <div style={{ margin: 10 }}>
+          </FormControl>
+          <FormControl fullWidth>
             <TextField
-                autoComplete="current-password"
-                type={'password'}
-                label="Repetir Contraseña"
-                {...getFieldProps('repetir')}
-                error={Boolean(touched.repetir && errors.repetir)}
-                helperText={touched.repetir && errors.repetir}
-                style={TexField}
+              autoComplete="new-password"
+              type={'password'}
+              label="Repetir Contraseña"
+              {...getFieldProps('repetir')}
+              error={Boolean(touched.repetir && errors.repetir)}
+              helperText={touched.repetir && errors.repetir}
             />
-          </div>
-        </Stack>
-        <Stack direction="row">
-          <FormControl style={{ width: 200, margin: 10 }}>
-            <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={rol}
-              label="Age"
-              onChange={handleChangeRol}
-            >
-              <MenuItem value={'true'}>Administrador</MenuItem>
-              <MenuItem value={'false'}>Usuario</MenuItem>
-            </Select>
           </FormControl>
         </Stack>
-        <div style={{marginLeft:'16%'}}>
-        <LoadingButton
-          size="small"
-          type="submit"
-          variant="contained"
-          loading={isSubmitting}
-          style={Buttons}
-        >
-          Guardar
-        </LoadingButton>
+        <Divider orientation="horizontal" flexItem />
+        <div style={{ width: "50%" }}>
+          <Stack direction="row" spacing={2}>
+            <FormControl fullWidth>
+              <LabelSelect id="demo-simple-select-label">Prioridad de Usuario</LabelSelect>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={rol}
+                label="Age"
+                onChange={handleChangeRol}
+              >
+                <MenuItem value={'true'}>Administrador</MenuItem>
+                <MenuItem value={'false'}>Usuario</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <LoadingButton
+                size="small"
+                type="submit"
+                variant="contained"
+                loading={isSubmitting}
+                style={Buttons}
+              >
+                Guardar
+              </LoadingButton>
+            </FormControl>
+          </Stack>
         </div>
 
       </Form>

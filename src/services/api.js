@@ -1,5 +1,5 @@
 import axios from 'axios';
 
-const API_URL = process.env.API_URL || 'http://localhost:8001';
+const API_URL = process.env.API_URL || 'http://localhost:8000';
 
-export default axios.create({ baseURL: `${API_URL}/api`, responseType: 'json',withCredentials:true });
+export default axios.create({ baseURL: API_URL, responseType: 'json',withCredentials:true });

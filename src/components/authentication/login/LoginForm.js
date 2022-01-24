@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
@@ -19,6 +19,9 @@ import {
 import { LoadingButton } from '@mui/lab';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+const API_URL = process.env.API_URL || 'http://localhost:8000';
+
 
 // ----------------------------------------------------------------------
 
@@ -53,27 +56,23 @@ export default function LoginForm() {
     onSubmit: async () => {
       const user = formik.getFieldProps('username').value;
       const pass = formik.getFieldProps('password').value;
-
-      const test = api.post('/login', {
-        usu: user,
-        clav_usu: pass
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      });
-
       try {
-        const response = await test;
+
+        await api.get(`sanctum/csrf-cookie`);
+
+        const response = await api.post('api/login', { usuario: user, password: pass }, { headers: { 'Content-Type': 'application/json', } });
+
         if (!response || !response.data) {
           notify('Hubo un error al comunicarse con el servidor');
           return;
         }
+
         if (response && response.data && response.data.error) {
           notify('Usuario o contraseña incorrecto');
           console.error(response.data.error)
           return;
         }
+        const users = await api.get('api/users', { headers: { 'Content-Type': 'application/json' } });
         
         navigate('/dashboard', { replace: true });
       } catch (err) {
