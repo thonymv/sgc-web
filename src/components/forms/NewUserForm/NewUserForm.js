@@ -79,6 +79,34 @@ export default function NewUserForm({ nucleos, pnfs }) {
   const [nuc, setNuc] = useState('')
   const [pnf, setPnf] = useState('')
 
+
+
+  const [nucleosList , setNucleosList ] = useState([]);
+  const [pnflist , setPnfList ] = useState([]);
+
+
+  const getPNF = () => {
+    api.get('/api/pnf').then((res) => {
+      const pnf = res.data.pnf;
+      setPnfList(pnf);
+    }); 
+  }
+ 
+
+  const getNucleos = () => {
+    api.get('/api/nucleo').then((res) => {
+      const nucleo = res.data.nucleo;
+      setNucleosList(nucleo);
+      console.log(nucleo);
+    }); 
+  }
+
+
+  useEffect(() => {
+   getNucleos();
+   getPNF();
+  }, [])
+
   const Scheme = Yup.object().shape({
     clave: Yup.string().required('La contraseña es obilgatoria'),
     repetir: Yup.string()
@@ -302,8 +330,9 @@ export default function NewUserForm({ nucleos, pnfs }) {
                 label="Age"
                 onChange={handleChangeNucleo}
               >
-                {nucleos
-                  ? nucleos.map((row) => <MenuItem value={row.id}>{row.name}</MenuItem>)
+                {nucleosList?nucleosList.map((row) => 
+                  (<MenuItem value={row.id}>{row.nombre}</MenuItem>)
+                )
                   : <MenuItem value={0}>No existen núcleos registrados en el sistema</MenuItem>
                 }
               </Select>
@@ -319,8 +348,8 @@ export default function NewUserForm({ nucleos, pnfs }) {
                 label="Age"
                 onChange={handleChangePnf}
               >
-                {pnfs
-                  ? pnfs.map((row) => <MenuItem value={row.id}>{row.name}</MenuItem>)
+                {pnflist
+                  ? pnflist.map((row) => <MenuItem value={row.id}>{row.nombre}</MenuItem>)
                   : <MenuItem value={0}>No existen PNF registrados en el sistema</MenuItem>
                 }
               </Select>

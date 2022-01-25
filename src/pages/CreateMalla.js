@@ -120,9 +120,9 @@ export default function CreateMalla() {
               value="age"
               label="Age"
             >
-              <MenuItem value={10}>Trismestral</MenuItem>
-              <MenuItem value={20}>Semestral</MenuItem>
-              <MenuItem value={30}>Anual</MenuItem>
+              <MenuItem value={0}>Trismestral</MenuItem>
+              <MenuItem value={1}>Semestral</MenuItem>
+              <MenuItem value={2}>Anual</MenuItem>
             </Select>
           </FormControl>
         </Stack>
