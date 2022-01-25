@@ -139,7 +139,7 @@ export default function Malla() {
 
   function getUsers() {
     api.get('/api/malla').then((res) => {
-      const persons = res.data.pnf;
+      const persons = res.data.mallas;
       setUserList(persons);
       console.log(persons);
     }); 
@@ -217,11 +217,14 @@ export default function Malla() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { codigo } = row;
+                      const { codigo , nucleo , nucleo_data , pnf , modalidad} = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
                           <TableCell align="left">{`${codigo}`}</TableCell>
+                          <TableCell align="left">{`${nucleo_data.nombre}`}</TableCell>
+                          <TableCell align="left">{`${pnf}`}</TableCell>
+                          <TableCell align="left">{`${modalidad==0?'Trimestral':modalidad==1?'Semestral':modalidad==2?'Anual':'Sin modalidad'}`}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenuContent />
                           </TableCell>
