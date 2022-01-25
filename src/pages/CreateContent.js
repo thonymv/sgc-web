@@ -52,14 +52,22 @@ const Buttons = {
 export default function CreateContent() {
 
   const navigate = useNavigate();
-
+  const [mallasList, setMallasList] = useState([]);
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
     if (!token) {
       navigate('/login')
     }
+    getMallas();
   }, [])
+  function getMallas() {
+    api.get(`api/malla`).then((res) => {
+      const persons = res.data.mallas;
+      setMallasList(persons);
+      console.warn('persons:////', persons);
+    });
+  }
 
   const [malla, setMalla] = useState(0);
 
@@ -246,9 +254,9 @@ export default function CreateContent() {
                   }}
                   label="Age"
                 >
-                  <MenuItem value={1}>One</MenuItem>
-                  <MenuItem value={2}>Two</MenuItem>
-                  <MenuItem value={3}>Thre</MenuItem>
+                  {
+                    mallasList && mallasList.map((malla) => (<MenuItem value={malla.id}>{malla.codigo}</MenuItem>))
+                  }
                 </Select>
               </FormControl>
             </Stack>

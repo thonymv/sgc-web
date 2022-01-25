@@ -34,6 +34,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { styled } from '@mui/material/styles';
+import api from 'src/services/api';
 
 const TextField = (props) => <TextInput {...props} inputProps={{ ...props.inputProps, form: { autocomplete: 'off' } }} />
 
@@ -45,6 +46,7 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 const TABLE_HEAD = [
   { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
   { id: 'duracion', label: 'Duración', alignRight: false },
+  { id: 'malla', label: 'Malla Curricular', alignRight: false },
   { id: '' }
 ];
 
@@ -143,12 +145,13 @@ export default function Pnf() {
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
-    axios.get(`http://localhost:8001/usuarios`).then((res) => {
-      const persons = res.data;
+    api.get(`api/contenido`).then((res) => {
+      const persons = res.data.contenidos;
       setUserList(persons);
       console.warn('persons:////', persons);
     });
   }
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -223,13 +226,14 @@ export default function Pnf() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
+                      const { unidad_curricular, trayecto, malla_data } = row;
                       const status = true;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="left">{unidad_curricular}</TableCell>
+                          <TableCell align="left">Trayecto {trayecto == 0 ? 'Inicial' : trayecto}</TableCell>
+                          <TableCell align="left">{malla_data?.codigo}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenuContent />
                           </TableCell>
