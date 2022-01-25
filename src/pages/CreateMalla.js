@@ -20,7 +20,9 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { styled } from '@mui/material/styles';
+import NewMallaForm from 'src/components/forms/NewMalla/NewMallaForm';
 import api from 'src/services/api';
+
 
 const LabelSelect = styled(InputLabel)(({ theme }) => ({
   backgroundColor: 'white',
@@ -49,100 +51,17 @@ export default function CreateMalla() {
 
   const navigate = useNavigate();
 
-  const [nucleos , setNucleos ] = useState([]);
-  const [pnf , setPnf ] = useState([]);
 
-
-  const getPNF = () => {
-    api.get('/api/pnf').then((res) => {
-      const pnf = res.data.pnf;
-      setPnf(pnf);
-    }); 
-  }
- 
-
-  const getNucleos = () => {
-    api.get('/api/nucleo').then((res) => {
-      const nucleo = res.data.nucleo;
-      setNucleos(nucleo);
-      console.log(nucleo);
-    }); 
-  }
-
-
-  useEffect(() => {
-   getNucleos();
-   getPNF();
-  }, [])
 
   return (
-    <Page title="Crear contenido sinóptico | SGC">
+    <Page title="Crear malla | SGC">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Crear malla
           </Typography>
         </Stack>
-        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
-          <FormControl fullWidth>
-            <LabelSelect id="demo-simple-select-label">Nucleo</LabelSelect>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="age"
-              label="Age"
-            >{
-              nucleos?.map((nucleo) => 
-              (<MenuItem value={10}>{nucleo.nombre}</MenuItem>)
-              )
-            }
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <LabelSelect id="demo-simple-select-label">PNF</LabelSelect>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="age"
-              label="Age"
-            >
-             { pnf?.map((pnf) => 
-              (<MenuItem value={10}>{pnf.nombre}</MenuItem>)
-              )
-            }
-            </Select>
-          </FormControl>
-          <FormControl fullWidth>
-            <LabelSelect id="demo-simple-select-label">Modalidad</LabelSelect>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value="age"
-              label="Age"
-            >
-              <MenuItem value={0}>Trismestral</MenuItem>
-              <MenuItem value={1}>Semestral</MenuItem>
-              <MenuItem value={2}>Anual</MenuItem>
-            </Select>
-          </FormControl>
-        </Stack>
-        <Divider orientation="horizontal" flexItem />
-        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
-          <FormControl fullWidth>
-            <TextField id="outlined-basic" label="Codigo" variant="outlined" />
-          </FormControl>
-          <FormControl fullWidth>
-            <TextField id="outlined-basic" label="Periodos" variant="outlined" />
-          </FormControl>
-          <FormControl fullWidth>
-            <TextField id="outlined-basic" label="Trayectos" variant="outlined" />
-          </FormControl>
-        </Stack>
-        <div style={{ flexDirection: 'row' }}>
-          <Button variant="contained" style={Buttons}>
-            Guardar
-          </Button>
-        </div>
+        <NewMallaForm />
       </Container>
     </Page>
   );

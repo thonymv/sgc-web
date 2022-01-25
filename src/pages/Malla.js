@@ -32,7 +32,7 @@ import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 import {reactLocalStorage} from 'reactjs-localstorage';
-
+import api from 'src/services/api';
 
 const TABLE_HEAD = [
   { id: 'Código', label: 'Código', alignRight: false },
@@ -82,6 +82,7 @@ export default function Malla() {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [userList, setUserList] = useState([]);
+
   const navigate = useNavigate();
 
   const handleRequestSort = (event, property) => {
@@ -137,22 +138,17 @@ export default function Malla() {
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
-    axios.get(`http://localhost:8001/usuarios`).then((res) => {
-      const persons = res.data;
+    api.get('/api/malla').then((res) => {
+      const persons = res.data.pnf;
       setUserList(persons);
-      console.warn('persons:////', persons);
-    });
+      console.log(persons);
+    }); 
   }
   useEffect(() => {
     getUsers();
   }, []);
 
-  useEffect(() => {
-    const token = reactLocalStorage.get('token', true);
-    if(!token){
-      navigate('/login')
-    }
-}, [])
+
 
   return (
     <Page title="Mallas | Minimal-UI">
@@ -221,14 +217,11 @@ export default function Malla() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
-                      const status = true;
+                      const { codigo } = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="left">{`${codigo}`}</TableCell>
                           <TableCell align="right">
                             <UserMoreMenuContent />
                           </TableCell>
