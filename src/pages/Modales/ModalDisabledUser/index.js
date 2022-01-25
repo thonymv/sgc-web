@@ -33,7 +33,7 @@ export default function ModalDisabledUser({ visibility, setVisibility , userData
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Seguro que desea {userData.estatus?'desahabilitar':'Habilitar'} a el usuario {userData.usu} ?
+            Seguro que desea {userData.estatus?'deshabilitar':'Habilitar'} a el usuario {userData.usu} ?
           </Typography>
           <DisabledUserForm userData={userData} setVisibility={setVisibility} />
         </Box>

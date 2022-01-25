@@ -54,7 +54,7 @@ export default function UserMoreMenu({ userData , nucleos }) {
           <ListItemIcon>
             <Icon icon={powerOutline} width={24} height={24} />
           </ListItemIcon>
-          <ListItemText primary={userData.estatus?'Desahabilitar':'Habilitar'} primaryTypographyProps={{ variant: 'body2' }} />
+          <ListItemText primary={userData.estatus?'Deshabilitar':'Habilitar'} primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         <MenuItem onClick={() => setEditPasswordUser(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>

@@ -217,7 +217,7 @@ export default function User() {
 
                           <TableCell align="left">
                             <Label variant="ghost" color={estatus ? 'success' : 'error'}>
-                              {estatus ? 'Activo' : 'Desahabilitado'}
+                              {estatus ? 'Activo' : 'Deshabilitado'}
                             </Label>
                           </TableCell>
                           <TableCell align="left">

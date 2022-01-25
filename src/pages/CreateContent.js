@@ -99,7 +99,30 @@ export default function CreateContent() {
             />
           </FormControl>
           <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">Contenido Analitíco</InputLabel>
+            <InputLabel id="demo-simple-select-label">Estrategias</InputLabel>
+            <TextareaAutosize
+              minRows={10}
+              maxRows={50}
+              aria-label="maximum height"
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
+            />
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Evaluación</InputLabel>
+            <TextareaAutosize
+              minRows={10}
+              maxRows={50}
+              aria-label="maximum height"
+              placeholder="Maximum 50 rows"
+              style={TextAreas}
+            />
+          </FormControl>
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Referencias</InputLabel>
             <TextareaAutosize
               minRows={10}
               maxRows={50}
@@ -115,7 +138,53 @@ export default function CreateContent() {
             <TextField id="outlined-basic" label="Nombre de unidad curricular" variant="outlined" />
           </FormControl>
           <FormControl fullWidth>
-            <TextField id="outlined-basic" label="Codigo de malla curricular" variant="outlined" />
+            <LabelSelect id="demo-simple-select-label">Malla curricular</LabelSelect>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value="age"
+              label="Age"
+            >
+              <MenuItem value={10}>Ten</MenuItem>
+              <MenuItem value={20}>Twenty</MenuItem>
+              <MenuItem value={30}>Thirty</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Trayecto" type={'number'} variant="outlined" />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Creditos" type={'number'} variant="outlined" />
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Densidad" type={'number'} variant="outlined" />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Hora de academia" type={'number'} variant="outlined" />
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="HTA" type={'number'} variant="outlined" />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="HTI" type={'number'} variant="outlined" />
+          </FormControl>
+        </Stack>
+        <Divider orientation="horizontal" flexItem />
+        <Stack direction={{ xs: 'column', sm: 'column', md: 'row' }} spacing={2}>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="Tipo" type={'number'} variant="outlined" />
+          </FormControl>
+          <FormControl fullWidth>
+            <TextField id="outlined-basic" label="THTE" type={'number'} variant="outlined" />
           </FormControl>
         </Stack>
         <Divider orientation="horizontal" flexItem />
