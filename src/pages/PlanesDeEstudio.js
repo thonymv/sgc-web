@@ -29,6 +29,7 @@ import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 import {reactLocalStorage} from 'reactjs-localstorage';
+import UserMorePNF from 'src/components/_dashboard/pnf/UserMorePNF';
 
 const TABLE_HEAD = [
   { id: 'codigo', label: 'Codigo', alignRight: false },
@@ -136,24 +137,16 @@ export default function PlanEstudio() {
 
   const isUserNotFound = filteredUsers.length === 0;
 
-  const getNucleos = async () => {
-      api.get('/nucleos', config).then((res) => {
-        const nucleos = res.data;
-        setNucleos(nucleos);
-        console.log(nucleos);
-      }); 
-  }
+
 
   function getUsers() {
-     api.get('/pnfs', config).then((res) => {
-        const persons = res.data;
+     api.get('/api/pnf').then((res) => {
+        const persons = res.data.pnf;
         setUSERLIST(persons);
-        console.log(persons);
       }); 
   }
   useEffect(() => {
     getUsers();
-    getNucleos();
   }, []);
   
   useEffect(() => {
@@ -208,12 +201,16 @@ export default function PlanEstudio() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { mod_pnf , pnf } = row;
+                      const { codigo , nombre } = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${pnf}`}</TableCell>
-                          <TableCell align="left">{`${mod_pnf}`}</TableCell>
+                          <TableCell align="left">{`${codigo}`}</TableCell>
+                          <TableCell align="left">{`${nombre}`}</TableCell>
+
+                          <TableCell align="right">
+                            <UserMorePNF PnfData={row} />
+                          </TableCell>
                         </TableRow>
                       );
                     })}

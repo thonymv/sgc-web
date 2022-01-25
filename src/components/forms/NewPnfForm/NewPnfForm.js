@@ -97,15 +97,14 @@ export default function NewPnfForm({ nucleos }) {
       codigo: '',
       pnf: ''
     },
-    validationSchema: Scheme,
     onSubmit: async () => {
       const codigo = formik.getFieldProps('codigo').value;
       const pnf = formik.getFieldProps('pnf').value;
 
-      const req = api.post('/pnfs', {
+      const req = api.post('/api/pnf', {
         codigo: codigo,
-        pnf: pnf
-      }, config);
+        nombre: pnf
+      });
 
       try {
         const response = await req;
@@ -119,7 +118,6 @@ export default function NewPnfForm({ nucleos }) {
       } catch (error) {
         console.log(error);
       }
-
     }
   });
 

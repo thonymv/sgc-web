@@ -20,6 +20,7 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { styled } from '@mui/material/styles';
+import api from 'src/services/api';
 
 const LabelSelect = styled(InputLabel)(({ theme }) => ({
   backgroundColor: 'white',
@@ -48,11 +49,30 @@ export default function CreateMalla() {
 
   const navigate = useNavigate();
 
+  const [nucleos , setNucleos ] = useState([]);
+  const [pnf , setPnf ] = useState([]);
+
+
+  const getPNF = () => {
+    api.get('/api/pnf').then((res) => {
+      const pnf = res.data.pnf;
+      setPnf(pnf);
+    }); 
+  }
+ 
+
+  const getNucleos = () => {
+    api.get('/api/nucleo').then((res) => {
+      const nucleo = res.data.nucleo;
+      setNucleos(nucleo);
+      console.log(nucleo);
+    }); 
+  }
+
+
   useEffect(() => {
-    const token = reactLocalStorage.get('token', true);
-    if (!token) {
-      navigate('/login')
-    }
+   getNucleos();
+   getPNF();
   }, [])
 
   return (
@@ -71,10 +91,11 @@ export default function CreateMalla() {
               id="demo-simple-select"
               value="age"
               label="Age"
-            >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+            >{
+              nucleos?.map((nucleo) => 
+              (<MenuItem value={10}>{nucleo.nombre}</MenuItem>)
+              )
+            }
             </Select>
           </FormControl>
           <FormControl fullWidth>
@@ -85,9 +106,10 @@ export default function CreateMalla() {
               value="age"
               label="Age"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+             { pnf?.map((pnf) => 
+              (<MenuItem value={10}>{pnf.nombre}</MenuItem>)
+              )
+            }
             </Select>
           </FormControl>
           <FormControl fullWidth>
@@ -98,9 +120,9 @@ export default function CreateMalla() {
               value="age"
               label="Age"
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              <MenuItem value={10}>Trismestral</MenuItem>
+              <MenuItem value={20}>Semestral</MenuItem>
+              <MenuItem value={30}>Anual</MenuItem>
             </Select>
           </FormControl>
         </Stack>
