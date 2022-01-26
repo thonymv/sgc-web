@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
@@ -34,6 +34,8 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import { styled } from '@mui/material/styles';
+import api from 'src/services/api';
+import { ToastContainer, toast } from 'react-toastify';
 
 const TextField = (props) => <TextInput {...props} inputProps={{ ...props.inputProps, form: { autocomplete: 'off' } }} />
 
@@ -45,6 +47,7 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 const TABLE_HEAD = [
   { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
   { id: 'duracion', label: 'Duración', alignRight: false },
+  { id: 'malla', label: 'Malla Curricular', alignRight: false },
   { id: '' }
 ];
 
@@ -89,6 +92,29 @@ export default function Pnf() {
 
   const [userList, setUserList] = useState([]);
   const navigate = useNavigate();
+  const { state } = useLocation()
+
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+
+  const notifySuccess = (message) =>
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -143,14 +169,18 @@ export default function Pnf() {
   const isUserNotFound = filteredUsers.length === 0;
 
   function getUsers() {
-    axios.get(`http://localhost:8001/usuarios`).then((res) => {
-      const persons = res.data;
+    api.get(`api/contenido`).then((res) => {
+      const persons = res.data.contenidos;
       setUserList(persons);
       console.warn('persons:////', persons);
     });
   }
+
   useEffect(() => {
     getUsers();
+    if (state && state.success) {
+      notifySuccess('Registrado con Exito!')
+    }
   }, []);
 
   useEffect(() => {
@@ -159,6 +189,26 @@ export default function Pnf() {
       navigate('/login')
     }
   }, [])
+
+  const handleUpdate = (row) => {
+    const newList = userList.map(item => {
+      if (row.id == item.id) {
+        return row
+      }
+      return item
+    })
+    setUserList(newList)
+  }
+
+  const handleDelete = (id) => {
+    const newList = userList.map(item => item)
+    userList.map((item, index) => {
+      if (id == item.id) {
+        delete newList[index]
+      }
+    })
+    setUserList(newList)
+  }
 
   return (
     <Page title="Contenido Sinóptico | Minimal-UI">
@@ -223,15 +273,16 @@ export default function Pnf() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { ci, nomb1, nomb2, apel1, apel2 } = row;
+                      const { unidad_curricular, trayecto, malla_data } = row;
                       const status = true;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
-                          <TableCell align="left">{`${nomb1} ${nomb2}`}</TableCell>
-                          <TableCell align="left">{`${apel1} ${apel2}`}</TableCell>
+                          <TableCell align="left">{unidad_curricular}</TableCell>
+                          <TableCell align="left">Trayecto {trayecto == 0 ? 'Inicial' : trayecto}</TableCell>
+                          <TableCell align="left">{malla_data?.codigo}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMenuContent />
+                            <UserMoreMenuContent updateList={handleUpdate} deleteRow={handleDelete} contenido={row} message={{ notifySuccess, notifyError }} />
                           </TableCell>
                         </TableRow>
                       );
@@ -267,6 +318,17 @@ export default function Pnf() {
           />
         </Card>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Page>
   );
 }

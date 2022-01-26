@@ -14,18 +14,25 @@ import ModalDeleteContent from '../../../pages/Modales/ContenidoSinoptico/ModalD
 import ModalEditContent from '../../../pages/Modales/ContenidoSinoptico/ModalEditContent';
 import ModalViewContent from '../../../pages/Modales/ContenidoSinoptico/ModalViewContent';
 
-export default function UserMoreMenuContent() {
+export default function UserMoreMenuContent({ updateList, contenido, message, deleteRow }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [modalDeleteContent, setModalDeleteContent] = useState(false);
   const [modalEditContent, setModalEditContent] = useState(false);
   const [modalViewContent, setModalViewContent] = useState(false);
+  const setMessage = (success, text) => {
+    if (!message) return;
+    if (success) {
+      message.notifySuccess(text)
+    } else {
+      message.notifyError(text)
+    }
+  }
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
         <Icon icon={moreVerticalFill} width={20} height={20} />
       </IconButton>
-
       <Menu
         open={isOpen}
         anchorEl={ref.current}
@@ -55,9 +62,25 @@ export default function UserMoreMenuContent() {
           <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
-      <ModalDeleteContent visibility={modalDeleteContent} setVisibility={setModalDeleteContent} />
-      <ModalEditContent visibility={modalEditContent} setVisibility={setModalEditContent} />
-      <ModalViewContent visibility={modalViewContent} setVisibility={setModalViewContent} />
+      <ModalDeleteContent visibility={modalDeleteContent} deleteRow={deleteRow} contenido={contenido || {}}
+        setMessage={setMessage}
+        setVisibility={(value) => {
+          setModalDeleteContent(value)
+          setIsOpen(value)
+        }}
+      />
+      <ModalEditContent contenido={contenido || {}} updateList={updateList} visibility={modalEditContent} setMessage={setMessage}
+        setVisibility={(value) => {
+          setModalEditContent(value)
+          setIsOpen(value)
+        }}
+      />
+      <ModalViewContent visibility={modalViewContent} contenido={contenido || {}}
+        setVisibility={(value) => {
+          setModalViewContent(value)
+          setIsOpen(value)
+        }}
+      />
     </>
   );
 }
