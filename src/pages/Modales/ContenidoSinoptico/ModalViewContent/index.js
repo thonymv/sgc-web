@@ -14,7 +14,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  height: '98%',
+  height: '90%',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -28,13 +28,11 @@ const subheader = {
 
 const header = {
   color: 'black',
-  fontSize: '24px',
+  fontSize: '15px',
   fontWeight: 'bold',
-  marginLeft: '25%',
-  marginTop: '-5%'
 };
 
-export default function ModalViewContent({ visibility, setVisibility }) {
+export default function ModalViewContent({ visibility, setVisibility, contenido }) {
   return (
     <div>
       <Modal
@@ -44,7 +42,9 @@ export default function ModalViewContent({ visibility, setVisibility }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography style={header}>Programación II</Typography>
+          <div style={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 10 }}>
+            <Typography style={header}>{`${contenido.unidad_curricular} Trayecto ${contenido.trayecto}`}</Typography>
+          </div>
           <List
             sx={{
               width: '100%',
@@ -52,7 +52,7 @@ export default function ModalViewContent({ visibility, setVisibility }) {
               bgcolor: 'background.paper',
               position: 'relative',
               overflow: 'auto',
-              maxHeight: '100%',
+              maxHeight: '95%',
               '& ul': { padding: 0 }
             }}
             subheader={<li />}
@@ -61,7 +61,7 @@ export default function ModalViewContent({ visibility, setVisibility }) {
               <ul>
                 <ListSubheader style={subheader}>Saberes</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+                  <ListItemText primary={contenido.saberes} />
                 </ListItem>
               </ul>
             </li>
@@ -69,15 +69,7 @@ export default function ModalViewContent({ visibility, setVisibility }) {
               <ul>
                 <ListSubheader style={subheader}>Recursos</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
-                </ListItem>
-              </ul>
-            </li>
-            <li>
-              <ul>
-                <ListSubheader style={subheader}>Contenido Analitíco</ListSubheader>
-                <ListItem>
-                  <ListItemText primary="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+                  <ListItemText primary={contenido.recursos} />
                 </ListItem>
               </ul>
             </li>
@@ -85,15 +77,111 @@ export default function ModalViewContent({ visibility, setVisibility }) {
               <ul>
                 <ListSubheader style={subheader}>Estrategias</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+                  <ListItemText primary={contenido.estrategias} />
                 </ListItem>
               </ul>
             </li>
             <li>
               <ul>
-                <ListSubheader style={subheader}>Duración</ListSubheader>
+                <ListSubheader style={subheader}>Evaluación</ListSubheader>
                 <ListItem>
-                  <ListItemText primary="Trimestre" />
+                  <ListItemText primary={contenido.evaluacion} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Referencias</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.referencias} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>HTEA</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.htea} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>HTEI</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.htei} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Tipo</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.tipo} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>THTE</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.thte} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Hora Académica</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.hora_academica} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Hora Académica</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.hora_academica} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Densidad</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.densidad} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Créditos</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.creditos} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Trayecto</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.trayecto} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Unidad Curricular</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.unidad_curricular} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Malla Curricular</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.malla_data?.codigo} />
                 </ListItem>
               </ul>
             </li>

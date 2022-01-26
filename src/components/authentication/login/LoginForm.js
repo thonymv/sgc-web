@@ -71,9 +71,7 @@ export default function LoginForm() {
           notify('Usuario o contraseña incorrecto');
           console.error(response.data.error)
           return;
-        }
-        const users = await api.get('api/users', { headers: { 'Content-Type': 'application/json' } });
-        
+        }        
         navigate('/dashboard', { replace: true });
       } catch (err) {
         notify('Hubo un error al comunicarse con el servidor');

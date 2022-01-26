@@ -28,7 +28,7 @@ const sidebarConfig = [
   },
   {
     title: 'Contenidos',
-    path: '/dashboard/pnf',
+    path: '/dashboard/contenido',
     icon: getIcon(fileTextFill)
   },
   ,

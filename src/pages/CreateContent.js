@@ -61,6 +61,7 @@ export default function CreateContent() {
     }
     getMallas();
   }, [])
+
   function getMallas() {
     api.get(`api/malla`).then((res) => {
       const persons = res.data.mallas;
@@ -73,17 +74,6 @@ export default function CreateContent() {
 
   const notifyError = (message) =>
     toast.error(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-
-  const notifySuccess = (message) =>
-    toast.success(message, {
       position: 'bottom-right',
       autoClose: 5000,
       hideProgressBar: false,
@@ -153,7 +143,7 @@ export default function CreateContent() {
           console.log(response.data.error)
           return;
         }
-        notifySuccess('Registrado con Exito!')
+        navigate('/dashboard/contenido', { state: { success: true } })
         console.log(response.data)
       } catch (error) {
         notifyError('Hubo un error al comunicarse con el servidor');
