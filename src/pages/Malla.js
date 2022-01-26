@@ -31,6 +31,7 @@ import Label from '../components/Label';
 import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
+import UserMoreMalla from 'src/components/_dashboard/malla/UserMoreMalla';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import api from 'src/services/api';
 
@@ -216,7 +217,7 @@ export default function Malla() {
                 <TableBody>
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row) => {
+                    ?.map((row) => {
                       const { codigo , nucleo , nucleo_data , pnf , modalidad} = row;
                       return (
                         <TableRow>
@@ -226,7 +227,7 @@ export default function Malla() {
                           <TableCell align="left">{`${pnf}`}</TableCell>
                           <TableCell align="left">{`${modalidad==0?'Trimestral':modalidad==1?'Semestral':modalidad==2?'Anual':'Sin modalidad'}`}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMenuContent />
+                            <UserMoreMalla MallaData={row}  />
                           </TableCell>
                         </TableRow>
                       );

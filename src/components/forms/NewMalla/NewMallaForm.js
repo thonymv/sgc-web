@@ -170,6 +170,7 @@ export default function NewMallaForm() {
           return;
         }
         notifySuccess('Registrado con Exito!')
+        navigate('/api/Malla');
       } catch (error) {
         console.log(error);
       }
