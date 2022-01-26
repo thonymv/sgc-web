@@ -13,7 +13,7 @@ import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@
 import ModalVerUsuario from '../../../pages/Modales/ModalVerUsuario';
 import ModalEditPNF from '../../../pages/Modales/ModalEditPNF';
 import ModalEditPasswordUser from '../../../pages/Modales/ModalEditPasswordUser';
-import ModalDisabledUser from '../../../pages/Modales/ModalDisabledUser';
+import ModalDeletePNF from '../../../pages/Modales/ModalDeletePNF';
 
 export default function UserMorePNF({ PnfData }) {
   const ref = useRef(null);
@@ -21,7 +21,7 @@ export default function UserMorePNF({ PnfData }) {
   const [viewUserModal, setViewUserModal] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [editPasswordUser, setEditPasswordUser] = useState(false);
-  const [disabledUser, setDisabledUser] = useState(false);
+  const [deletePnf, setDeletePNF] = useState(false);
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
@@ -44,9 +44,16 @@ export default function UserMorePNF({ PnfData }) {
           </ListItemIcon>
           <ListItemText primary="Editar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
+        <MenuItem onClick={() => setDeletePNF(true)} sx={{ color: 'text.secondary' }}>
+          <ListItemIcon>
+            <Icon icon={trash2Outline} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
       </Menu>
 
       <ModalEditPNF visibility={editUser} setVisibility={setEditUser} PnfData={PnfData} />
+      <ModalDeletePNF visibility={deletePnf} setVisibility={setDeletePNF} PnfData={PnfData} />
 
     </>
   );
