@@ -7,6 +7,8 @@ import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import eyeOutline from '@iconify/icons-eva/eye-outline';
 import lockOutline from '@iconify/icons-eva/lock-outline';
 import powerOutline from '@iconify/icons-eva/power-outline';
+import filePdfFill from '@iconify/icons-ant-design/file-pdf-twotone';
+
 // material
 import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 // Modales
@@ -48,6 +50,12 @@ export default function UserMoreMenuContent({ updateList, contenido, message, de
             <Icon icon={eyeOutline} width={24} height={24} />
           </ListItemIcon>
           <ListItemText primary="Ver" primaryTypographyProps={{ variant: 'body2' }} />
+        </MenuItem>
+        <MenuItem onClick={() => setModalViewContent(true)} sx={{ color: 'text.secondary' }}>
+          <ListItemIcon>
+            <Icon icon={filePdfFill} width={24} height={24} />
+          </ListItemIcon>
+          <ListItemText primary="PDF" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
         <MenuItem onClick={() => setModalEditContent(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
