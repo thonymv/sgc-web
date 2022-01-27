@@ -7,12 +7,25 @@ import moreVerticalFill from '@iconify/icons-eva/more-vertical-fill';
 import eyeOutline from '@iconify/icons-eva/eye-outline';
 import lockOutline from '@iconify/icons-eva/lock-outline';
 import powerOutline from '@iconify/icons-eva/power-outline';
+import filePdfFill from '@iconify/icons-ant-design/file-pdf-twotone';
+import { styled } from '@mui/material/styles';
 // material
-import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText, Button as ButtonAlias } from '@mui/material';
 // Modales
 import ModalDeleteContent from '../../../pages/Modales/ContenidoSinoptico/ModalDeleteContent';
 import ModalEditContent from '../../../pages/Modales/ContenidoSinoptico/ModalEditContent';
 import ModalViewContent from '../../../pages/Modales/ContenidoSinoptico/ModalViewContent';
+const API_URL = process.env.API_URL || 'http://localhost:8000';
+
+const Button = styled(ButtonAlias)(({ theme }) => ({
+  width: '100%',
+  paddingLeft: '1.06em',
+  color: '#617282',
+  '&:hover': {
+    boxShadow: 'none',
+    backgroundColor: 'transparent'
+  }
+}));
 
 export default function UserMoreMenuContent({ updateList, contenido, message, deleteRow }) {
   const ref = useRef(null);
@@ -43,6 +56,22 @@ export default function UserMoreMenuContent({ updateList, contenido, message, de
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
+        <MenuItem sx={{ color: 'text.secondary' }} style={{ position: 'relative' }}>
+          <Button style={{ opacity: 0 }}>
+            <ListItemIcon>
+              <Icon icon={filePdfFill} width={24} height={24} />
+            </ListItemIcon>
+            <ListItemText primary="PDF" primaryTypographyProps={{ variant: 'body2' }} />
+          </Button>
+          <div style={{ width: '100%', left: 0, position: 'absolute' }}>
+            <Button href={`${API_URL}/contenido/pdf/${contenido.id}`}>
+              <ListItemIcon>
+                <Icon icon={filePdfFill} width={24} height={24} />
+              </ListItemIcon>
+              <ListItemText primary="PDF" primaryTypographyProps={{ variant: 'body2' }} />
+            </Button>
+          </div>
+        </MenuItem>
         <MenuItem onClick={() => setModalViewContent(true)} sx={{ color: 'text.secondary' }}>
           <ListItemIcon>
             <Icon icon={eyeOutline} width={24} height={24} />

@@ -253,12 +253,12 @@ export default function NewMallaForm() {
           <FormControl fullWidth>
             <TextField               
             {...getFieldProps('periodos')}
-            id="outlined-basic" label="Periodos" variant="outlined" />
+            id="outlined-basic" label="Periodos" variant="outlined" type={'number'} />
           </FormControl>
           <FormControl fullWidth>
             <TextField 
             {...getFieldProps('trayectos')}
-             id="outlined-basic" label="Trayectos" variant="outlined" />
+             id="outlined-basic" label="Trayectos" variant="outlined" type={'number'} />
           </FormControl>
         </Stack>
         <div style={{ flexDirection: 'row' }}>

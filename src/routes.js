@@ -31,6 +31,7 @@ export default function Router() {
   const location = useLocation()
 
   useEffect(() => {
+    setStatus(1)
     api.get('api/user', { headers: { 'Content-Type': 'application/json' } })
       .then((response) => {
         if (response.data?.id) {

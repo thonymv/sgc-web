@@ -193,8 +193,8 @@ export default function EditMallaForm({ MallaData, setVisibility, drop, update, 
             type={'text'}
             label="Codigo"
             {...getFieldProps('codigo')}
-            error={Boolean(touched.clave && errors.clave)}
-            helperText={touched.clave && errors.clave}
+            error={Boolean(touched.codigo && errors.codigo)}
+            helperText={touched.codigo && errors.codigo}
             style={TexField}
           />
         </Stack>
@@ -202,19 +202,7 @@ export default function EditMallaForm({ MallaData, setVisibility, drop, update, 
           <TextField
             fullWidth
             autoComplete="current-password"
-            type={'text'}
-            label="Periodos"
-            {...getFieldProps('periodos')}
-            error={Boolean(touched.repetir && errors.repetir)}
-            helperText={touched.repetir && errors.repetir}
-            style={TexField}
-          />
-        </Stack>
-        <Stack spacing={3}>
-          <TextField
-            fullWidth
-            autoComplete="current-password"
-            type={'text'}
+            type={'number'}
             label="Trayectos"
             {...getFieldProps('trayectos')}
             error={Boolean(touched.repetir && errors.repetir)}

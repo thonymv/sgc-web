@@ -45,8 +45,9 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
 }));
 
 const TABLE_HEAD = [
+  { id: 'codigo', label: 'Código', alignRight: false },
   { id: 'unidad', label: 'Unidad Curricular', alignRight: false },
-  { id: 'duracion', label: 'Duración', alignRight: false },
+  { id: 'trayecto', label: 'Trayecto', alignRight: false },
   { id: 'malla', label: 'Malla Curricular', alignRight: false },
   { id: '' }
 ];
@@ -245,15 +246,6 @@ export default function Pnf() {
           >
             Aplicar
           </Button>
-          {/* <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            style={{ marginRight: '2%', marginBottom: '2%', color: 'white' }}
-            color="success"
-          >
-            Exportar resultados en PDF
-          </Button> */}
         </Stack>
 
         <Card>
@@ -273,11 +265,12 @@ export default function Pnf() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { unidad_curricular, trayecto, malla_data } = row;
+                      const { codigo, unidad_curricular, trayecto, malla_data } = row;
                       const status = true;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
+                          <TableCell align="left">{codigo}</TableCell>
                           <TableCell align="left">{unidad_curricular}</TableCell>
                           <TableCell align="left">Trayecto {trayecto == 0 ? 'Inicial' : trayecto}</TableCell>
                           <TableCell align="left">{malla_data?.codigo}</TableCell>
