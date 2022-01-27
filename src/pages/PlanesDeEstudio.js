@@ -272,6 +272,17 @@ const handleDelete = (id) => {
               </Table>
             </TableContainer>
           </Scrollbar>
+          <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}

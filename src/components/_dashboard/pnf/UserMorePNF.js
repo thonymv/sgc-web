@@ -62,7 +62,6 @@ export default function UserMorePNF({ PnfData , update , deleted , message }) {
           <ListItemText primary="Eliminar" primaryTypographyProps={{ variant: 'body2' }} />
         </MenuItem>
       </Menu>
-
       <ModalEditPNF visibility={editUser} setVisibility={setEditUser} drop={setIsOpen} PnfData={PnfData} update={update} setMessage={setMessage} />
       <ModalDeletePNF visibility={deletePnf} setVisibility={setDeletePNF} drop={setIsOpen} PnfData={PnfData} deleted={deleted} setMessage={setMessage} />
 
