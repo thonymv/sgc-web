@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink , useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // material
 import {
@@ -32,7 +32,7 @@ import Scrollbar from '../components/Scrollbar';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../components/_dashboard/user';
 import UserMoreMalla from 'src/components/_dashboard/malla/UserMoreMalla';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
 import api from 'src/services/api';
 
 const TABLE_HEAD = [
@@ -143,7 +143,7 @@ export default function Malla() {
       const persons = res.data.mallas;
       setUserList(persons);
       console.log(persons);
-    }); 
+    });
   }
   useEffect(() => {
     getUsers();
@@ -188,7 +188,7 @@ export default function Malla() {
             Crear malla
           </Button>
         </Stack>
-{/* {        <Stack direction="row" alignItems="center">
+        {/* {        <Stack direction="row" alignItems="center">
           <FormControl style={{ width: 200, marginRight: '2%', marginBottom: '2%' }}>
             <InputLabel id="demo-simple-select-label">Duración</InputLabel>
             <Select
@@ -239,16 +239,16 @@ export default function Malla() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     ?.map((row) => {
-                      const { codigo , nucleo_data , pnf , modalidad} = row;
+                      const { codigo, nucleo_data, pnf_data, modalidad } = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
                           <TableCell align="left">{`${codigo}`}</TableCell>
                           <TableCell align="left">{`${nucleo_data.nombre}`}</TableCell>
-                          <TableCell align="left">{`${pnf}`}</TableCell>
-                          <TableCell align="left">{`${modalidad==0?'Trimestral':modalidad==1?'Semestral':modalidad==2?'Anual':'Sin modalidad'}`}</TableCell>
+                          <TableCell align="left">{`${pnf_data.nombre}`}</TableCell>
+                          <TableCell align="left">{`${modalidad == 0 ? 'Trimestral' : modalidad == 1 ? 'Semestral' : modalidad == 2 ? 'Anual' : 'Sin modalidad'}`}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMalla MallaData={row} update={handleUpdate} deleted={handleDelete}  />
+                            <UserMoreMalla MallaData={row} update={handleUpdate} deleted={handleDelete} />
                           </TableCell>
                         </TableRow>
                       );
