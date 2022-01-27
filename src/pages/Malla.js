@@ -34,6 +34,7 @@ import { UserListHead, UserListToolbar, UserMoreMenuContent } from '../component
 import UserMoreMalla from 'src/components/_dashboard/malla/UserMoreMalla';
 import { reactLocalStorage } from 'reactjs-localstorage';
 import api from 'src/services/api';
+import { ToastContainer, toast } from 'react-toastify';
 
 const TABLE_HEAD = [
   { id: 'Código', label: 'Código', alignRight: false },
@@ -85,6 +86,28 @@ export default function Malla() {
   const [userList, setUserList] = useState([]);
 
   const navigate = useNavigate();
+
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+
+  const notifySuccess = (message) =>
+    toast.success(message, {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -248,7 +271,7 @@ export default function Malla() {
                           <TableCell align="left">{`${pnf_data.nombre}`}</TableCell>
                           <TableCell align="left">{`${modalidad == 0 ? 'Trimestral' : modalidad == 1 ? 'Semestral' : modalidad == 2 ? 'Anual' : 'Sin modalidad'}`}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMalla MallaData={row} update={handleUpdate} deleted={handleDelete} />
+                            <UserMoreMalla MallaData={row} update={handleUpdate} deleted={handleDelete} message={{ notifySuccess, notifyError }} />
                           </TableCell>
                         </TableRow>
                       );
@@ -284,6 +307,17 @@ export default function Malla() {
           />
         </Card>
       </Container>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Page>
   );
 }

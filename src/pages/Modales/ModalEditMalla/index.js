@@ -22,7 +22,7 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  height: '85%' ,
+  height: '85%',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -41,7 +41,7 @@ const Buttons = {
 };
 
 
-export default function ModalEditMalla({ visibility, setVisibility , MallaData , drop , update }) {
+export default function ModalEditMalla({ visibility, setVisibility, MallaData, drop, update, setMessage }) {
 
   return (
     <div>
@@ -52,7 +52,7 @@ export default function ModalEditMalla({ visibility, setVisibility , MallaData ,
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <EditMallaForm setVisibility={setVisibility} MallaData={MallaData} drop={drop} update={update} />
+          <EditMallaForm setMessage={setMessage} setVisibility={setVisibility} MallaData={MallaData} drop={drop} update={update} />
         </Box>
       </Modal>
     </div>

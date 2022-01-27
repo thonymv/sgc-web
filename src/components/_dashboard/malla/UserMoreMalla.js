@@ -13,11 +13,20 @@ import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@
 import ModalEditMalla from 'src/pages/Modales/ModalEditMalla';
 import ModalDeleteMalla from 'src/pages/Modales/ModalDeleteMalla'
 
-export default function UserMoreMalla({ MallaData , update , deleted }) {
+export default function UserMoreMalla({ MallaData, update, deleted, message }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [editUser, setEditUser] = useState(false);
-  const [deleteMalla, setDeleteMalla ] = useState(false);
+  const [deleteMalla, setDeleteMalla] = useState(false);
+
+  const setMessage = (success, text) => {
+    if (!message) return;
+    if (success) {
+      message.notifySuccess(text)
+    } else {
+      message.notifyError(text)
+    }
+  }
 
   return (
     <>
@@ -49,9 +58,9 @@ export default function UserMoreMalla({ MallaData , update , deleted }) {
         </MenuItem>
       </Menu>
 
-      <ModalEditMalla visibility={editUser} setVisibility={setEditUser} MallaData={MallaData} drop={setIsOpen} update={update} />
-      <ModalDeleteMalla visibility={deleteMalla} setVisibility={setDeleteMalla} MallaData={MallaData} drop={setIsOpen} deleted={deleted} />
-      
+      <ModalEditMalla setMessage={setMessage} visibility={editUser} setVisibility={setEditUser} MallaData={MallaData} drop={setIsOpen} update={update} />
+      <ModalDeleteMalla setMessage={setMessage} visibility={deleteMalla} setVisibility={setDeleteMalla} MallaData={MallaData} drop={setIsOpen} deleted={deleted} />
+
     </>
   );
 }

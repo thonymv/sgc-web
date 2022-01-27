@@ -57,7 +57,7 @@ const LabelSelect = styled(InputLabel)(({ theme }) => ({
   paddingRight: 5
 }));
 
-export default function EditMallaForm({ MallaData, setVisibility, drop, update }) {
+export default function EditMallaForm({ MallaData, setVisibility, drop, update, setMessage }) {
 
   const navigate = useNavigate();
   const { id, codigo, nucleo, pnf, modalidad, periodos, trayectos } = MallaData
@@ -112,27 +112,9 @@ export default function EditMallaForm({ MallaData, setVisibility, drop, update }
   }, [])
 
 
-  const notifyError = (message) =>
-    toast.error(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const notifyError = (message) => setMessage(false, message)
 
-  const notifySuccess = (message) =>
-    toast.success(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const notifySuccess = (message) => setMessage(true, message)
 
   const formik = useFormik({
     initialValues: {
@@ -178,11 +160,9 @@ export default function EditMallaForm({ MallaData, setVisibility, drop, update }
           return;
         }
         notifySuccess('Cambio Exitoso!')
-        setTimeout(() => {
-          setVisibility(false)
-          drop(false)
-          update(dup)
-        }, 3000)
+        setVisibility(false)
+        drop(false)
+        update(dup)
       } catch (error) {
         console.log(error);
       }
