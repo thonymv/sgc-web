@@ -57,7 +57,7 @@ const style = {
     paddingRight: 5
   }));
 
-export default function EditMallaForm({ MallaData , setVisibility }) {
+export default function EditMallaForm({ MallaData , setVisibility, drop , update }) {
 
   const navigate = useNavigate();
   const { id  , codigo , nucleo , pnf , modalidad , periodos , trayectos } = MallaData
@@ -65,6 +65,8 @@ export default function EditMallaForm({ MallaData , setVisibility }) {
   const [ valueNucleo , setValueNucleo ] = useState(nucleo);
   const [ valuePnf , setValuePnf ] = useState(pnf);
   const [ valueModalidad , setValueModalidad ] = useState(modalidad);
+
+  const [ recoverNucleo , setRecoverNucleo ] = useState([]);
 
   const [nucleos , setNucleos ] = useState([]);
   const [pnfData , setPnfData ] = useState([]);
@@ -84,6 +86,17 @@ export default function EditMallaForm({ MallaData , setVisibility }) {
       console.log(nucleo);
     }); 
   }
+  
+  const getrecoverNucleo = (id) => {
+   nucleos.map((row) => {
+    if (row.id==id) {
+      console.log('recover');
+      console.log(row);
+      setRecoverNucleo(row)
+    }
+    })
+  }
+
 
   useEffect(() => {
     getNucleos();
@@ -127,6 +140,18 @@ const notifySuccess = (message) =>
       const periodos = formik.getFieldProps('periodos').value;
       const trayectos = formik.getFieldProps('trayectos').value;
 
+     getrecoverNucleo(id)
+
+      const dup = {
+        id:id,
+        codigo: codigo, 
+        periodos: periodos,
+        trayectos: trayectos,
+        modalidad: valueModalidad,
+        pnf: valuePnf,
+        nucleo_data: recoverNucleo
+      }
+
 
       const req = api.put(`/api/malla/${id}`, {
           codigo: codigo, 
@@ -146,6 +171,11 @@ const notifySuccess = (message) =>
             return;
           }
           notifySuccess('Cambio Exitoso!')
+          setTimeout(() => {
+            setVisibility(false) 
+            drop(false) 
+            update(dup)
+          } , 3000 )
       } catch (error) {
           console.log(error);
       }
@@ -155,6 +185,17 @@ const notifySuccess = (message) =>
 
   const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
   
+  const handValuePNF = (event) => {
+    setValuePnf(event.target.value)
+  };
+
+  const handValueNucleos = (event) => {
+    setValueNucleo(event.target.value)
+  };
+
+  const handValueModalidad = (event) => {
+    setValueModalidad(event.target.value)
+  };
 
   return (
     <FormikProvider value={formik}>
@@ -204,7 +245,7 @@ const notifySuccess = (message) =>
                 id="demo-simple-select"
                 value={valueNucleo}
                 label="Nucleo"
-                //onChange={handleChangeRol}
+                onChange={handValueNucleos}
               >
                 {nucleos?.map((row) => (<MenuItem value={row.id}>{row.nombre}</MenuItem>) )}
               </Select>
@@ -218,8 +259,8 @@ const notifySuccess = (message) =>
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={valuePnf}
-                label="Nucleo"
-                //onChange={handleChangeRol}
+                label="pnf"
+                onChange={handValuePNF}
               >
                 {pnfData?.map((row) => (<MenuItem value={row.id}>{row.nombre}</MenuItem>) )}
               </Select>
@@ -233,8 +274,8 @@ const notifySuccess = (message) =>
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={valueModalidad}
-                label="Nucleo"
-                //onChange={handleChangeRol}
+                label="modalidad"
+                onChange={handValueModalidad}
               >
                 <MenuItem value={0}>Trimestral</MenuItem>
                 <MenuItem value={1}>Semestral</MenuItem>

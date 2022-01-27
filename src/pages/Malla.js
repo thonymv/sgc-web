@@ -149,6 +149,27 @@ export default function Malla() {
     getUsers();
   }, []);
 
+  const handleUpdate = (row) => {
+    const newList = userList.map(item => {
+      if (row.id == item.id) {
+        return row
+      }
+      return item
+    })
+    setUserList(newList)
+  }
+
+  const handleDelete = (id) => {
+    const newList = userList.map(item => item)
+    userList.map((item, index) => {
+      if (id == item.id) {
+        delete newList[index]
+      }
+    })
+    setUserList(newList)
+  }
+
+
 
 
   return (
@@ -218,7 +239,7 @@ export default function Malla() {
                   {filteredUsers
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     ?.map((row) => {
-                      const { codigo , nucleo , nucleo_data , pnf , modalidad} = row;
+                      const { codigo , nucleo_data , pnf , modalidad} = row;
                       return (
                         <TableRow>
                           <TableCell padding="checkbox" />
@@ -227,7 +248,7 @@ export default function Malla() {
                           <TableCell align="left">{`${pnf}`}</TableCell>
                           <TableCell align="left">{`${modalidad==0?'Trimestral':modalidad==1?'Semestral':modalidad==2?'Anual':'Sin modalidad'}`}</TableCell>
                           <TableCell align="right">
-                            <UserMoreMalla MallaData={row}  />
+                            <UserMoreMalla MallaData={row} update={handleUpdate} deleted={handleDelete}  />
                           </TableCell>
                         </TableRow>
                       );

@@ -22,7 +22,7 @@ const Buttons = {
   marginBottom: '0%'
 };
 
-export default function ModalDeleteMalla({ visibility, setVisibility , MallaData }) {
+export default function ModalDeleteMalla({ visibility, setVisibility , MallaData , drop , deleted }) {
 
 
   return (
@@ -37,7 +37,7 @@ export default function ModalDeleteMalla({ visibility, setVisibility , MallaData
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Seguro que desea eliminar la malla curricular ?
           </Typography>
-          <DeleteMallaForm setVisibility={setVisibility} userData={MallaData} />
+          <DeleteMallaForm setVisibility={setVisibility} userData={MallaData} drop={drop} deleted={deleted} />
         </Box>
       </Modal>
     </div>

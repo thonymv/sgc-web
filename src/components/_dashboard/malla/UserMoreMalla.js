@@ -13,7 +13,7 @@ import { Menu, MenuItem, Modal, IconButton, ListItemIcon, ListItemText } from '@
 import ModalEditMalla from 'src/pages/Modales/ModalEditMalla';
 import ModalDeleteMalla from 'src/pages/Modales/ModalDeleteMalla'
 
-export default function UserMoreMalla({ MallaData }) {
+export default function UserMoreMalla({ MallaData , update , deleted }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [editUser, setEditUser] = useState(false);
@@ -49,8 +49,8 @@ export default function UserMoreMalla({ MallaData }) {
         </MenuItem>
       </Menu>
 
-      <ModalEditMalla visibility={editUser} setVisibility={setEditUser} MallaData={MallaData} />
-      <ModalDeleteMalla visibility={deleteMalla} setVisibility={setDeleteMalla} MallaData={MallaData}  />
+      <ModalEditMalla visibility={editUser} setVisibility={setEditUser} MallaData={MallaData} drop={setIsOpen} update={update} />
+      <ModalDeleteMalla visibility={deleteMalla} setVisibility={setDeleteMalla} MallaData={MallaData} drop={setIsOpen} deleted={deleted} />
       
     </>
   );

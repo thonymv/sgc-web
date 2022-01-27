@@ -41,7 +41,7 @@ const Buttons = {
 };
 
 
-export default function ModalEditMalla({ visibility, setVisibility , MallaData  }) {
+export default function ModalEditMalla({ visibility, setVisibility , MallaData , drop , update }) {
 
   return (
     <div>
@@ -52,7 +52,7 @@ export default function ModalEditMalla({ visibility, setVisibility , MallaData  
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <EditMallaForm setVisibility={setVisibility} MallaData={MallaData} />
+        <EditMallaForm setVisibility={setVisibility} MallaData={MallaData} drop={drop} update={update} />
         </Box>
       </Modal>
     </div>

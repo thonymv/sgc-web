@@ -45,7 +45,7 @@ const style = {
     marginBottom: '0%'
   };
 
-export default function DeleteMallaForm({ userData , setVisibility }) {
+export default function DeleteMallaForm({ userData , setVisibility , drop , deleted }) {
   const navigate = useNavigate();
 
   const { id  } = userData;
@@ -84,7 +84,11 @@ const notifySuccess = (message) =>
       try {
           const response = await req;
           notifySuccess('Acción completada con Exito!')
-          setTimeout(() => setVisibility(false) , 3000 )
+          setTimeout(() => {
+             setVisibility(false)
+             drop(false) 
+             deleted(id)
+            } , 3000 )
           
       } catch (error) {
           console.log(error);
