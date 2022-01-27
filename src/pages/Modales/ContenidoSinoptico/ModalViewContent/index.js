@@ -33,6 +33,21 @@ const header = {
 };
 
 export default function ModalViewContent({ visibility, setVisibility, contenido }) {
+  const renderModalidad = (modalidad, duracion) => {
+    let result = ''
+    switch (modalidad) {
+      case 0:
+        result = duracion > 1 ? 'trimestres' : 'trimestre';
+        break;
+      case 1:
+        result = duracion > 1 ? 'semestres' : 'semestre';
+        break;
+      default:
+        result = duracion > 1 ? 'años' : 'año';
+        break;
+    }
+    return result
+  }
   return (
     <div>
       <Modal
@@ -59,41 +74,19 @@ export default function ModalViewContent({ visibility, setVisibility, contenido 
           >
             <li>
               <ul>
-                <ListSubheader style={subheader}>Saberes</ListSubheader>
+                <ListSubheader style={subheader}>Código</ListSubheader>
                 <ListItem>
-                  <ListItemText primary={contenido.saberes} />
+                  <ListItemText primary={contenido.codigo} />
                 </ListItem>
               </ul>
             </li>
             <li>
               <ul>
-                <ListSubheader style={subheader}>Recursos</ListSubheader>
+                <ListSubheader style={subheader}>Duración</ListSubheader>
                 <ListItem>
-                  <ListItemText primary={contenido.recursos} />
-                </ListItem>
-              </ul>
-            </li>
-            <li>
-              <ul>
-                <ListSubheader style={subheader}>Estrategias</ListSubheader>
-                <ListItem>
-                  <ListItemText primary={contenido.estrategias} />
-                </ListItem>
-              </ul>
-            </li>
-            <li>
-              <ul>
-                <ListSubheader style={subheader}>Evaluación</ListSubheader>
-                <ListItem>
-                  <ListItemText primary={contenido.evaluacion} />
-                </ListItem>
-              </ul>
-            </li>
-            <li>
-              <ul>
-                <ListSubheader style={subheader}>Referencias</ListSubheader>
-                <ListItem>
-                  <ListItemText primary={contenido.referencias} />
+                  <ListItemText
+                    primary={`${contenido.duracion} ${renderModalidad(contenido.malla_data.modalidad, contenido.duracion)}`}
+                  />
                 </ListItem>
               </ul>
             </li>
@@ -182,6 +175,46 @@ export default function ModalViewContent({ visibility, setVisibility, contenido 
                 <ListSubheader style={subheader}>Malla Curricular</ListSubheader>
                 <ListItem>
                   <ListItemText primary={contenido.malla_data?.codigo} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Saberes</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.saberes} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Recursos</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.recursos} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Estrategias</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.estrategias} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Evaluación</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.evaluacion} />
+                </ListItem>
+              </ul>
+            </li>
+            <li>
+              <ul>
+                <ListSubheader style={subheader}>Referencias</ListSubheader>
+                <ListItem>
+                  <ListItemText primary={contenido.referencias} />
                 </ListItem>
               </ul>
             </li>

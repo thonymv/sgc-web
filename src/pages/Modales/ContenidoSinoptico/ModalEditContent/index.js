@@ -66,6 +66,15 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
       setMallasList(mallas);
     });
   }
+  const getSelectMalla = (id) => {
+    let malla = {}
+    mallasList.map((row) => {
+      if (row.id == id) {
+        malla = row
+      }
+    })
+    return malla
+  }
 
   const [malla, setMalla] = useState(contenido.malla);
 
@@ -75,6 +84,8 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
 
   const formik = useFormik({
     initialValues: {
+      codigo: '',
+      duracion: '',
       malla: '',
       unidad_curricular: '',
       trayecto: '',
@@ -93,6 +104,8 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
       ...contenido,
     },
     onSubmit: async () => {
+      const codigo = formik.getFieldProps('codigo').value;
+      const duracion = formik.getFieldProps('duracion').value;
       const unidad_curricular = formik.getFieldProps('unidad_curricular').value;
       const trayecto = formik.getFieldProps('trayecto').value;
       const creditos = formik.getFieldProps('creditos').value;
@@ -109,6 +122,8 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
       const referencias = formik.getFieldProps('referencias').value;
 
       const data = {
+        codigo: codigo,
+        duracion: duracion,
         malla: malla,
         unidad_curricular: unidad_curricular,
         trayecto: trayecto,
@@ -138,7 +153,7 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
           return;
         }
         notifySuccess('Modificado con Exito!')
-        updateList({ ...data, id: contenido.id })
+        updateList({ ...data, id: contenido.id, malla_data: getSelectMalla(contenido.malla) })
         setVisibility(false)
         console.log(response.data)
       } catch (error) {
@@ -181,76 +196,19 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
               >
                 <li>
                   <ul>
-                    <ListSubheader style={subheader}>Saberes</ListSubheader>
                     <ListItem>
-                      <TextareaAutosize
-                        maxRows={50}
-                        minRows={10}
-                        aria-label="maximum height"
-                        placeholder="Maximum 50 rows"
-                        style={{ width: '100%' }}
-                        {...getFieldProps('saberes')}
-                      />
+                      <FormControl fullWidth>
+                        <TextField {...getFieldProps('codigo')} id="outlined-basic" label="Código" variant="outlined" />
+                      </FormControl>
                     </ListItem>
                   </ul>
                 </li>
                 <li>
                   <ul>
-                    <ListSubheader style={subheader}>Recursos</ListSubheader>
                     <ListItem>
-                      <TextareaAutosize
-                        maxRows={50}
-                        minRows={10}
-                        aria-label="maximum height"
-                        placeholder="Maximum 50 rows"
-                        style={{ width: '100%' }}
-                        {...getFieldProps('recursos')}
-                      />
-                    </ListItem>
-                  </ul>
-                </li>
-                <li>
-                  <ul>
-                    <ListSubheader style={subheader}>Estrategias</ListSubheader>
-                    <ListItem>
-                      <TextareaAutosize
-                        minRows={10}
-                        maxRows={50}
-                        aria-label="maximum height"
-                        placeholder="Maximum 50 rows"
-                        {...getFieldProps('estrategias')}
-                        style={{ width: '100%' }}
-                      />
-                    </ListItem>
-                  </ul>
-                </li>
-                <li>
-                  <ul>
-                    <ListSubheader style={subheader}>Evaluación</ListSubheader>
-                    <ListItem>
-                      <TextareaAutosize
-                        minRows={10}
-                        maxRows={50}
-                        aria-label="maximum height"
-                        placeholder="Maximum 50 rows"
-                        {...getFieldProps('evaluacion')}
-                        style={{ width: '100%' }}
-                      />
-                    </ListItem>
-                  </ul>
-                </li>
-                <li>
-                  <ul>
-                    <ListSubheader style={subheader}>Referencias</ListSubheader>
-                    <ListItem>
-                      <TextareaAutosize
-                        minRows={10}
-                        maxRows={50}
-                        aria-label="maximum height"
-                        placeholder="Maximum 50 rows"
-                        {...getFieldProps('referencias')}
-                        style={{ width: '100%' }}
-                      />
+                      <FormControl fullWidth>
+                        <TextField {...getFieldProps('duracion')} id="outlined-basic" label="Duración" variant="outlined" />
+                      </FormControl>
                     </ListItem>
                   </ul>
                 </li>
@@ -354,6 +312,81 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
                       <FormControl fullWidth>
                         <TextField {...getFieldProps('thte')} id="outlined-basic" label="THTE" variant="outlined" />
                       </FormControl>
+                    </ListItem>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <ListSubheader style={subheader}>Saberes</ListSubheader>
+                    <ListItem>
+                      <TextareaAutosize
+                        maxRows={50}
+                        minRows={10}
+                        aria-label="maximum height"
+                        placeholder="Maximum 50 rows"
+                        style={{ width: '100%' }}
+                        {...getFieldProps('saberes')}
+                      />
+                    </ListItem>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <ListSubheader style={subheader}>Recursos</ListSubheader>
+                    <ListItem>
+                      <TextareaAutosize
+                        maxRows={50}
+                        minRows={10}
+                        aria-label="maximum height"
+                        placeholder="Maximum 50 rows"
+                        style={{ width: '100%' }}
+                        {...getFieldProps('recursos')}
+                      />
+                    </ListItem>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <ListSubheader style={subheader}>Estrategias</ListSubheader>
+                    <ListItem>
+                      <TextareaAutosize
+                        minRows={10}
+                        maxRows={50}
+                        aria-label="maximum height"
+                        placeholder="Maximum 50 rows"
+                        {...getFieldProps('estrategias')}
+                        style={{ width: '100%' }}
+                      />
+                    </ListItem>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <ListSubheader style={subheader}>Evaluación</ListSubheader>
+                    <ListItem>
+                      <TextareaAutosize
+                        minRows={10}
+                        maxRows={50}
+                        aria-label="maximum height"
+                        placeholder="Maximum 50 rows"
+                        {...getFieldProps('evaluacion')}
+                        style={{ width: '100%' }}
+                      />
+                    </ListItem>
+                  </ul>
+                </li>
+                <li>
+                  <ul>
+                    <ListSubheader style={subheader}>Referencias</ListSubheader>
+                    <ListItem>
+                      <TextareaAutosize
+                        minRows={10}
+                        maxRows={50}
+                        aria-label="maximum height"
+                        placeholder="Maximum 50 rows"
+                        {...getFieldProps('referencias')}
+                        style={{ width: '100%' }}
+                      />
                     </ListItem>
                   </ul>
                 </li>
