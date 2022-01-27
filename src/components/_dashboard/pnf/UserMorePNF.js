@@ -15,13 +15,24 @@ import ModalEditPNF from '../../../pages/Modales/ModalEditPNF';
 import ModalEditPasswordUser from '../../../pages/Modales/ModalEditPasswordUser';
 import ModalDeletePNF from '../../../pages/Modales/ModalDeletePNF';
 
-export default function UserMorePNF({ PnfData }) {
+export default function UserMorePNF({ PnfData , update , deleted , message }) {
   const ref = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [viewUserModal, setViewUserModal] = useState(false);
   const [editUser, setEditUser] = useState(false);
   const [editPasswordUser, setEditPasswordUser] = useState(false);
   const [deletePnf, setDeletePNF] = useState(false);
+
+
+  const setMessage = (success, text) => {
+    if (!message) return;
+    if (success) {
+      message.notifySuccess(text)
+    } else {
+      message.notifyError(text)
+    }
+  }
+
   return (
     <>
       <IconButton ref={ref} onClick={() => setIsOpen(true)}>
@@ -52,8 +63,8 @@ export default function UserMorePNF({ PnfData }) {
         </MenuItem>
       </Menu>
 
-      <ModalEditPNF visibility={editUser} setVisibility={setEditUser} PnfData={PnfData} />
-      <ModalDeletePNF visibility={deletePnf} setVisibility={setDeletePNF} PnfData={PnfData} />
+      <ModalEditPNF visibility={editUser} setVisibility={setEditUser} drop={setIsOpen} PnfData={PnfData} update={update} setMessage={setMessage} />
+      <ModalDeletePNF visibility={deletePnf} setVisibility={setDeletePNF} drop={setIsOpen} PnfData={PnfData} deleted={deleted} setMessage={setMessage} />
 
     </>
   );

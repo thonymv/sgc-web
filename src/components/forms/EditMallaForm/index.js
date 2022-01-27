@@ -162,7 +162,7 @@ export default function EditMallaForm({ MallaData, setVisibility, drop, update, 
         notifySuccess('Cambio Exitoso!')
         setVisibility(false)
         drop(false)
-        update(dup)
+        update({...dup , id: id})
       } catch (error) {
         console.log(error);
       }

@@ -45,33 +45,15 @@ const style = {
     marginBottom: '0%'
   };
 
-export default function DeletePnfForm({ userData , setVisibility }) {
+export default function DeletePnfForm({ userData , setVisibility , deleted , drop, setMessage }) {
   const navigate = useNavigate();
 
   const { id  } = userData;
 
 
-  const notifyError = (message) =>
-    toast.error(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const notifyError = (message) => setMessage(false, message)
 
-const notifySuccess = (message) =>
-    toast.success(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const notifySuccess = (message) => setMessage(true, message)
 
   const formik = useFormik({
     initialValues: {
@@ -83,8 +65,9 @@ const notifySuccess = (message) =>
       try {
           const response = await req;
           notifySuccess('Acción completada con Exito!')
-          setTimeout(() => setVisibility(false) , 3000 )
-          
+            setVisibility(false)
+            drop(false) 
+            deleted(id)
       } catch (error) {
           console.log(error);
       }

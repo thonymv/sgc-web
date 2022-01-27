@@ -22,7 +22,7 @@ const Buttons = {
   marginBottom: '0%'
 };
 
-export default function ModalDeletePNF({ visibility, setVisibility , PnfData }) {
+export default function ModalDeletePNF({ visibility, setVisibility , PnfData , deleted , drop , sendMessage }) {
 
 
   return (
@@ -37,7 +37,7 @@ export default function ModalDeletePNF({ visibility, setVisibility , PnfData }) 
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Seguro que desea eliminar el plan de estudio ?
           </Typography>
-          <DeletePnfForm setVisibility={setVisibility} userData={PnfData} />
+          <DeletePnfForm setVisibility={setVisibility} userData={PnfData} deleted={deleted} drop={drop} setMessage={sendMessage} />
         </Box>
       </Modal>
     </div>

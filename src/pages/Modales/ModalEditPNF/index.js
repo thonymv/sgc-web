@@ -40,7 +40,7 @@ const Buttons = {
 };
 
 
-export default function ModalEditPNF({ visibility, setVisibility , PnfData , nucleos }) {
+export default function ModalEditPNF({ visibility, setVisibility , PnfData , nucleos , update , drop , setMessage }) {
 
   return (
     <div>
@@ -51,7 +51,7 @@ export default function ModalEditPNF({ visibility, setVisibility , PnfData , nuc
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <EditPnfForm setVisibility={setVisibility} PnfData={PnfData} />
+          <EditPnfForm setVisibility={setVisibility} PnfData={PnfData} update={update} drop={drop} setMessage={setMessage} />
         </Box>
       </Modal>
     </div>

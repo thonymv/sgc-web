@@ -115,6 +115,7 @@ export default function NewPnfForm({ nucleos }) {
           return;
         }
         notifySuccess('Registrado con Exito!')
+        navigate('/dashboard/planestudio');
       } catch (error) {
         console.log(error);
       }

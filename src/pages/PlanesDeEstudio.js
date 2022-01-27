@@ -30,6 +30,8 @@ import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
 import {reactLocalStorage} from 'reactjs-localstorage';
 import UserMorePNF from 'src/components/_dashboard/pnf/UserMorePNF';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TABLE_HEAD = [
   { id: 'codigo', label: 'Codigo', alignRight: false },
@@ -81,9 +83,27 @@ export default function PlanEstudio() {
   const [USERLIST, setUSERLIST] = useState([]);
   const [nucleos, setNucleos] = useState([]);
 
-  const config = {
-    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-  };
+  const notifyError = (message) =>
+  toast.error(message, {
+    position: 'bottom-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined
+  });
+
+const notifySuccess = (message) =>
+  toast.success(message, {
+    position: 'bottom-right',
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined
+  });
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -156,6 +176,26 @@ export default function PlanEstudio() {
     }
 }, [])
 
+const handleUpdate = (row) => {
+  const newList = USERLIST.map(item => {
+    if (row.id == item.id) {
+      return row
+    }
+    return item
+  })
+  setUSERLIST(newList)
+}
+
+const handleDelete = (id) => {
+  const newList = USERLIST.map(item => item)
+  USERLIST.map((item, index) => {
+    if (id == item.id) {
+      delete newList[index]
+    }
+  })
+  setUSERLIST(newList)
+}
+
 
   return (
     <Page title="Usuarios | SGC">
@@ -209,7 +249,7 @@ export default function PlanEstudio() {
                           <TableCell align="left">{`${nombre}`}</TableCell>
 
                           <TableCell align="right">
-                            <UserMorePNF PnfData={row} />
+                            <UserMorePNF PnfData={row} update={handleUpdate} deleted={handleDelete} message={{ notifySuccess, notifyError }} />
                           </TableCell>
                         </TableRow>
                       );

@@ -45,7 +45,7 @@ const style = {
     marginBottom: '0%',
     marginTop: '0%',
   };
-export default function EditPnfForm({ PnfData , setVisibility }) {
+export default function EditPnfForm({ PnfData , setVisibility , update , drop, setMessage }) {
   const navigate = useNavigate();
 
   const [showPassword1, setShowPassword1] = useState(false);
@@ -53,42 +53,15 @@ export default function EditPnfForm({ PnfData , setVisibility }) {
 
   const { id , nombre , codigo  } = PnfData
 
-
-
   const PassScheme = Yup.object().shape({
     clave: Yup.string().required('La contraseña es obilgatoria'),
     repetir: Yup.string()
        .oneOf([Yup.ref('clave'), null], 'Las contraseñas no coinciden')
   });
 
-  const token = localStorage.getItem('token');
+  const notifyError = (message) => setMessage(false, message)
 
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-    'Content-Type': 'application/json'
-  };
-
-  const notifyError = (message) =>
-    toast.error(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-
-const notifySuccess = (message) =>
-    toast.success(message, {
-      position: 'bottom-right',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
+  const notifySuccess = (message) => setMessage(true, message)
 
   const formik = useFormik({
     initialValues: {
@@ -104,6 +77,11 @@ const notifySuccess = (message) =>
           nombre: nombre
       });
 
+      const dup = {
+        codigo:codigo,
+        nombre: nombre
+      }
+
       try {
           const response = await req;
 
@@ -113,6 +91,9 @@ const notifySuccess = (message) =>
             return;
           }
           notifySuccess('Cambio Exitoso!')
+          update({...dup, id: id})
+          setVisibility(false)
+          drop(false)
       } catch (error) {
           console.log(error);
       }
