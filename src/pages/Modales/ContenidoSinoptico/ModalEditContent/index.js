@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import { useState, useEffect } from 'react'
 import { Box, InputLabel } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -76,6 +77,27 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
     return malla
   }
 
+  const contenidoSchema = Yup.object().shape({
+    codigo: Yup.string().required('Este campo es requerido'),
+    duracion: Yup.string().required('Este campo es requerido'),
+    malla: Yup.string().required('Este campo es requerido'),
+    unidad_curricular: Yup.string().required('Este campo es requerido'),
+    trayecto: Yup.string().required('Este campo es requerido'),
+    creditos: Yup.string().required('Este campo es requerido'),
+    densidad: Yup.string().required('Este campo es requerido'),
+    hora_academica: Yup.string().required('Este campo es requerido'),
+    htea: Yup.string().required('Este campo es requerido'),
+    htei: Yup.string().required('Este campo es requerido'),
+    tipo: Yup.string().required('Este campo es requerido'),
+    thte: Yup.string().required('Este campo es requerido'),
+    saberes: Yup.string().required('Este campo es requerido'),
+    estrategias: Yup.string().required('Este campo es requerido'),
+    recursos: Yup.string().required('Este campo es requerido'),
+    evaluacion: Yup.string().required('Este campo es requerido'),
+    malla: Yup.string().required('Este campo es requerido'),
+    referencias: Yup.string().required('Este campo es requerido')
+  });
+
   const [malla, setMalla] = useState(contenido.malla);
 
   const notifyError = (message) => setMessage(false, message)
@@ -103,6 +125,7 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
       referencias: '',
       ...contenido,
     },
+    validationSchema: contenidoSchema,
     onSubmit: async () => {
       const codigo = formik.getFieldProps('codigo').value;
       const duracion = formik.getFieldProps('duracion').value;
@@ -198,7 +221,10 @@ export default function ModalEditContent({ visibility, setVisibility, contenido,
                   <ul>
                     <ListItem>
                       <FormControl fullWidth>
-                        <TextField {...getFieldProps('codigo')} id="outlined-basic" label="Código" variant="outlined" />
+                        <TextField 
+                  helperText={touched.codigo && errors.codigo} error={Boolean(touched.codigo && errors.codigo)}
+
+                        {...getFieldProps('codigo')} id="outlined-basic" label="Código" variant="outlined" />
                       </FormControl>
                     </ListItem>
                   </ul>
