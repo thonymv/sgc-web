@@ -6,7 +6,7 @@ import { Box, Button, Typography, Container } from '@mui/material';
 // components
 import { MotionContainer, varBounceIn } from '../components/animate';
 import Page from '../components/Page';
-
+import svg_404 from './illustration_404.svg'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -38,7 +38,7 @@ export default function Page404() {
             <motion.div variants={varBounceIn}>
               <Box
                 component="img"
-                src="/static/illustrations/illustration_404.svg"
+                src={svg_404}
                 sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
               />
             </motion.div>

@@ -13,7 +13,7 @@ import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { LoginForm } from '../components/authentication/login';
 import Logo from '../components/Logo2';
-
+import image_login from './illustration_login.png'
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -73,7 +73,7 @@ export default function Login() {
           <WelcomeLogin variant="h3" sx={{ mt: 10, mb: 5 }}>
             Bienvenido(a)
           </WelcomeLogin>
-          <ThumbnailLogin src="/static/illustrations/illustration_login.png" alt="login" />
+          <ThumbnailLogin src={image_login} alt="login" />
         </SectionStyle>
       </MHidden>
 

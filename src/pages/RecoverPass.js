@@ -1,4 +1,4 @@
-import { Link as RouterLink , useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 // material
 import { styled } from '@mui/material/styles';
@@ -9,7 +9,8 @@ import AuthLayout from '../layouts/AuthLayout';
 import Page from '../components/Page';
 import { MHidden } from '../components/@material-extend';
 import { RecoverForm } from '../components/authentication/recover';
-import {reactLocalStorage} from 'reactjs-localstorage';
+import { reactLocalStorage } from 'reactjs-localstorage';
+import image_login from './illustration_login.png'
 
 // ----------------------------------------------------------------------
 
@@ -55,10 +56,10 @@ export default function RecoverPassword() {
 
   useEffect(() => {
     const token = reactLocalStorage.get('token', true);
-    if(!token){
+    if (!token) {
       navigate('/login')
     }
-}, [])
+  }, [])
 
   return (
     <RootStyle title="Login | Minimal-UI">
@@ -69,7 +70,7 @@ export default function RecoverPassword() {
           <WelcomeLogin variant="h3" sx={{ mt: 10, mb: 5 }}>
             Recuperar Contraseña
           </WelcomeLogin>
-          <ThumbnailLogin src="/static/illustrations/illustration_login.png" alt="login" />
+          <ThumbnailLogin src={image_login} alt="login" />
         </SectionStyle>
       </MHidden>
 
