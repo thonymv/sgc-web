@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/sgc-web/static/js/main.f2e8843c.chunk.js",
-    "main.js.map": "/sgc-web/static/js/main.f2e8843c.chunk.js.map",
+    "main.js": "/sgc-web/static/js/main.7d1cca85.chunk.js",
+    "main.js.map": "/sgc-web/static/js/main.7d1cca85.chunk.js.map",
     "runtime-main.js": "/sgc-web/static/js/runtime-main.cffe6dd3.js",
     "runtime-main.js.map": "/sgc-web/static/js/runtime-main.cffe6dd3.js.map",
     "static/css/2.70be8bb3.chunk.css": "/sgc-web/static/css/2.70be8bb3.chunk.css",
@@ -22,6 +22,6 @@
     "static/js/runtime-main.cffe6dd3.js",
     "static/css/2.70be8bb3.chunk.css",
     "static/js/2.6515c790.chunk.js",
-    "static/js/main.f2e8843c.chunk.js"
+    "static/js/main.7d1cca85.chunk.js"
   ]
 }
